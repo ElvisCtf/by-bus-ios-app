@@ -18,6 +18,7 @@
 		FCA7A4982CF5C4B10028858E /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4972CF5C4B10028858E /* BookmarkViewController.swift */; };
 		FCA7A49B2CF5C5470028858E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A49A2CF5C5470028858E /* TabBarController.swift */; };
 		FCA7A49D2CF5C63D0028858E /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A49C2CF5C63D0028858E /* SettingViewController.swift */; };
+		FCA7A4A12CF5CAB50028858E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCA7A4A02CF5CAB50028858E /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCA7A4A12CF5CAB50028858E /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +191,9 @@
 			dependencies = (
 			);
 			name = ByBus;
+			packageProductDependencies = (
+				FCA7A4A02CF5CAB50028858E /* SnapKit */,
+			);
 			productName = ByBus;
 			productReference = FCA7A45B2CF5B2080028858E /* ByBus.app */;
 			productType = "com.apple.product-type.application";
@@ -261,6 +266,9 @@
 				Base,
 			);
 			mainGroup = FCA7A4522CF5B2080028858E;
+			packageReferences = (
+				FCA7A49F2CF5CAB50028858E /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = FCA7A45C2CF5B2080028858E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -645,6 +653,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FCA7A49F2CF5CAB50028858E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FCA7A4A02CF5CAB50028858E /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCA7A49F2CF5CAB50028858E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FCA7A4532CF5B2080028858E /* Project object */;
 }
