@@ -15,6 +15,9 @@
 		FCA7A4762CF5B2090028858E /* ByBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4752CF5B2090028858E /* ByBusTests.swift */; };
 		FCA7A4802CF5B2090028858E /* ByBusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A47F2CF5B2090028858E /* ByBusUITests.swift */; };
 		FCA7A4822CF5B2090028858E /* ByBusUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4812CF5B2090028858E /* ByBusUITestsLaunchTests.swift */; };
+		FCA7A4982CF5C4B10028858E /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4972CF5C4B10028858E /* BookmarkViewController.swift */; };
+		FCA7A49B2CF5C5470028858E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A49A2CF5C5470028858E /* TabBarController.swift */; };
+		FCA7A49D2CF5C63D0028858E /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A49C2CF5C63D0028858E /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		FCA7A47B2CF5B2090028858E /* ByBusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ByBusUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCA7A47F2CF5B2090028858E /* ByBusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByBusUITests.swift; sourceTree = "<group>"; };
 		FCA7A4812CF5B2090028858E /* ByBusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByBusUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FCA7A4972CF5C4B10028858E /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
+		FCA7A49A2CF5C5470028858E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		FCA7A49C2CF5C63D0028858E /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +105,8 @@
 			children = (
 				FCA7A45E2CF5B2080028858E /* AppDelegate.swift */,
 				FCA7A4602CF5B2080028858E /* SceneDelegate.swift */,
-				FCA7A4622CF5B2080028858E /* RouteViewController.swift */,
-				FCA7A4672CF5B2090028858E /* Assets.xcassets */,
-				FCA7A4692CF5B2090028858E /* LaunchScreen.storyboard */,
+				FCA7A4952CF5C49C0028858E /* Features */,
+				FCA7A4942CF5C4890028858E /* Resources */,
 				FCA7A46C2CF5B2090028858E /* Info.plist */,
 			);
 			path = ByBus;
@@ -122,6 +127,50 @@
 				FCA7A4812CF5B2090028858E /* ByBusUITestsLaunchTests.swift */,
 			);
 			path = ByBusUITests;
+			sourceTree = "<group>";
+		};
+		FCA7A4942CF5C4890028858E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FCA7A4672CF5B2090028858E /* Assets.xcassets */,
+				FCA7A4692CF5B2090028858E /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FCA7A4952CF5C49C0028858E /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				FCA7A49A2CF5C5470028858E /* TabBarController.swift */,
+				FCA7A4962CF5C4A20028858E /* Route */,
+				FCA7A4992CF5C4B70028858E /* Bookmark */,
+				FCA7A49E2CF5C6410028858E /* Setting */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		FCA7A4962CF5C4A20028858E /* Route */ = {
+			isa = PBXGroup;
+			children = (
+				FCA7A4622CF5B2080028858E /* RouteViewController.swift */,
+			);
+			path = Route;
+			sourceTree = "<group>";
+		};
+		FCA7A4992CF5C4B70028858E /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				FCA7A4972CF5C4B10028858E /* BookmarkViewController.swift */,
+			);
+			path = Bookmark;
+			sourceTree = "<group>";
+		};
+		FCA7A49E2CF5C6410028858E /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				FCA7A49C2CF5C63D0028858E /* SettingViewController.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,9 +303,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCA7A4982CF5C4B10028858E /* BookmarkViewController.swift in Sources */,
 				FCA7A4632CF5B2080028858E /* RouteViewController.swift in Sources */,
 				FCA7A45F2CF5B2080028858E /* AppDelegate.swift in Sources */,
+				FCA7A49B2CF5C5470028858E /* TabBarController.swift in Sources */,
 				FCA7A4612CF5B2080028858E /* SceneDelegate.swift in Sources */,
+				FCA7A49D2CF5C63D0028858E /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
