@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC434C5A2CF85D8900B3B73F /* UINavigationController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */; };
 		FCA7A45F2CF5B2080028858E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A45E2CF5B2080028858E /* AppDelegate.swift */; };
 		FCA7A4612CF5B2080028858E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4602CF5B2080028858E /* SceneDelegate.swift */; };
 		FCA7A4632CF5B2080028858E /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4622CF5B2080028858E /* RouteViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
 		FCA7A45B2CF5B2080028858E /* ByBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ByBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCA7A45E2CF5B2080028858E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCA7A4602CF5B2080028858E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC434C572CF85D4200B3B73F /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				FC434C582CF85D4F00B3B73F /* Extensions */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		FC434C582CF85D4F00B3B73F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		FCA7A4522CF5B2080028858E = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +126,7 @@
 				FCA7A45E2CF5B2080028858E /* AppDelegate.swift */,
 				FCA7A4602CF5B2080028858E /* SceneDelegate.swift */,
 				FCA7A4952CF5C49C0028858E /* Features */,
+				FC434C572CF85D4200B3B73F /* Supporting */,
 				FCA7A4942CF5C4890028858E /* Resources */,
 				FCA7A46C2CF5B2090028858E /* Info.plist */,
 			);
@@ -312,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCA7A4982CF5C4B10028858E /* BookmarkViewController.swift in Sources */,
+				FC434C5A2CF85D8900B3B73F /* UINavigationController+Ext.swift in Sources */,
 				FCA7A4632CF5B2080028858E /* RouteViewController.swift in Sources */,
 				FCA7A45F2CF5B2080028858E /* AppDelegate.swift in Sources */,
 				FCA7A49B2CF5C5470028858E /* TabBarController.swift in Sources */,
