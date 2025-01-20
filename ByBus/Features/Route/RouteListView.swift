@@ -17,6 +17,7 @@ final class RouteListView: UIView {
         tv.dataSource = self
         tv.backgroundColor = .clear
         tv.separatorStyle = .none
+        tv.register(RouteCellView.self, forCellReuseIdentifier: RouteCellView.reuseID)
         tv.accessibilityIdentifier = "\(Self.name)_table"
         return tv
     }()
@@ -52,11 +53,12 @@ extension RouteListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell(frame: .zero)
+        let cell = tableView.dequeueReusableCell(withIdentifier: RouteCellView.reuseID, for: indexPath) as! RouteCellView
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
