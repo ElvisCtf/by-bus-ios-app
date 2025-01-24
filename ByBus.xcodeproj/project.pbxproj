@@ -11,6 +11,9 @@
 		FC434C5A2CF85D8900B3B73F /* UINavigationController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */; };
 		FC7C1C402D0694E800455623 /* RouteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7C1C3F2D0694E800455623 /* RouteListView.swift */; };
 		FC7C1C422D06970000455623 /* RouteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7C1C412D06970000455623 /* RouteCellView.swift */; };
+		FC7D6C4B2D3E3A5C004649BA /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D6C4A2D3E3A5C004649BA /* Endpoints.swift */; };
+		FC7D6C4E2D3E43DC004649BA /* RouteListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D6C4D2D3E43DC004649BA /* RouteListResponseDto.swift */; };
+		FC991C3F2D433300001AC049 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC991C3E2D433300001AC049 /* NetworkManager.swift */; };
 		FCA7A45F2CF5B2080028858E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A45E2CF5B2080028858E /* AppDelegate.swift */; };
 		FCA7A4612CF5B2080028858E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4602CF5B2080028858E /* SceneDelegate.swift */; };
 		FCA7A4632CF5B2080028858E /* RouteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A4622CF5B2080028858E /* RouteListViewController.swift */; };
@@ -23,6 +26,8 @@
 		FCA7A49B2CF5C5470028858E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A49A2CF5C5470028858E /* TabBarController.swift */; };
 		FCA7A49D2CF5C63D0028858E /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7A49C2CF5C63D0028858E /* SettingViewController.swift */; };
 		FCA7A4A12CF5CAB50028858E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCA7A4A02CF5CAB50028858E /* SnapKit */; };
+		FCE60B2C2D3F5D4600F92DB7 /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE60B2B2D3F5D4600F92DB7 /* APIServiceProtocol.swift */; };
+		FCE60B2E2D3F5DC800F92DB7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE60B2D2D3F5DC800F92DB7 /* APIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +52,9 @@
 		FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
 		FC7C1C3F2D0694E800455623 /* RouteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListView.swift; sourceTree = "<group>"; };
 		FC7C1C412D06970000455623 /* RouteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCellView.swift; sourceTree = "<group>"; };
+		FC7D6C4A2D3E3A5C004649BA /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		FC7D6C4D2D3E43DC004649BA /* RouteListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListResponseDto.swift; sourceTree = "<group>"; };
+		FC991C3E2D433300001AC049 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		FCA7A45B2CF5B2080028858E /* ByBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ByBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCA7A45E2CF5B2080028858E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCA7A4602CF5B2080028858E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +70,8 @@
 		FCA7A4972CF5C4B10028858E /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		FCA7A49A2CF5C5470028858E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		FCA7A49C2CF5C63D0028858E /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		FCE60B2B2D3F5D4600F92DB7 /* APIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
+		FCE60B2D2D3F5DC800F92DB7 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +117,34 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		FC7D6C462D3E37EA004649BA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FC7D6C472D3E37F1004649BA /* APIService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		FC7D6C472D3E37F1004649BA /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				FC7D6C4C2D3E4152004649BA /* Models */,
+				FC7D6C4A2D3E3A5C004649BA /* Endpoints.swift */,
+				FCE60B2B2D3F5D4600F92DB7 /* APIServiceProtocol.swift */,
+				FCE60B2D2D3F5DC800F92DB7 /* APIService.swift */,
+				FC991C3E2D433300001AC049 /* NetworkManager.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
+		FC7D6C4C2D3E4152004649BA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FC7D6C4D2D3E43DC004649BA /* RouteListResponseDto.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		FCA7A4522CF5B2080028858E = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +168,7 @@
 		FCA7A45D2CF5B2080028858E /* ByBus */ = {
 			isa = PBXGroup;
 			children = (
+				FC7D6C462D3E37EA004649BA /* Services */,
 				FCA7A45E2CF5B2080028858E /* AppDelegate.swift */,
 				FCA7A4602CF5B2080028858E /* SceneDelegate.swift */,
 				FCA7A4952CF5C49C0028858E /* Features */,
@@ -342,13 +381,18 @@
 				FCA7A4982CF5C4B10028858E /* BookmarkViewController.swift in Sources */,
 				FC434C5A2CF85D8900B3B73F /* UINavigationController+Ext.swift in Sources */,
 				FC2D00282D082B3D00D8AA22 /* UIView+Ext.swift in Sources */,
+				FCE60B2C2D3F5D4600F92DB7 /* APIServiceProtocol.swift in Sources */,
 				FCA7A4632CF5B2080028858E /* RouteListViewController.swift in Sources */,
 				FCA7A45F2CF5B2080028858E /* AppDelegate.swift in Sources */,
 				FC7C1C422D06970000455623 /* RouteCellView.swift in Sources */,
 				FC7C1C402D0694E800455623 /* RouteListView.swift in Sources */,
+				FCE60B2E2D3F5DC800F92DB7 /* APIService.swift in Sources */,
 				FCA7A49B2CF5C5470028858E /* TabBarController.swift in Sources */,
 				FCA7A4612CF5B2080028858E /* SceneDelegate.swift in Sources */,
 				FCA7A49D2CF5C63D0028858E /* SettingViewController.swift in Sources */,
+				FC991C3F2D433300001AC049 /* NetworkManager.swift in Sources */,
+				FC7D6C4E2D3E43DC004649BA /* RouteListResponseDto.swift in Sources */,
+				FC7D6C4B2D3E3A5C004649BA /* Endpoints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
