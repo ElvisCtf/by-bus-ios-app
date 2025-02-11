@@ -2,7 +2,7 @@
 //  NetworkManager.swift
 //  ByBus
 //
-//  Created by Elvis Cheng (ESD - Software Trainee, Digital Solutions) on 24/1/2025.
+//  Created by Elvis Cheng on 24/1/2025.
 //
 
 import Foundation
