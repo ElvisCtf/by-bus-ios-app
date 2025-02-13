@@ -7,25 +7,32 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class RouteListView: UIView {
     static let name = "RouteListView"
+    private let viewModel: RouteListViewModel
+    private let disposeBag = DisposeBag()
     
     private lazy var tableView: UITableView = {
-        var tv = UITableView(frame: .zero, style: .plain)
+        var tv = UITableView.plain(id: "\(Self.name)_table")
         tv.delegate = self
         tv.dataSource = self
-        tv.backgroundColor = .clear
-        tv.separatorStyle = .none
         tv.register(RouteCellView.self, forCellReuseIdentifier: RouteCellView.reuseID)
-        tv.accessibilityIdentifier = "\(Self.name)_table"
         return tv
     }()
     
-    init() {
+    private var routeList: [Route] {
+        return viewModel.routeListObservable.value
+    }
+    
+    init(with viewModel: RouteListViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
         setLayout()
+        setBinding()
+        viewModel.getRouteList()
     }
     
     private func setUI() {
@@ -40,8 +47,17 @@ final class RouteListView: UIView {
         }
     }
     
+    private func setBinding() {
+        viewModel.routeListObservable
+            .subscribe(onNext: { [weak self] list in
+                guard let self else { return }
+                self.tableView.reload()
+            })
+            .disposed(by: disposeBag)
+    }
+    
     required init?(coder: NSCoder) {
-        super.init(frame: .zero)
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -53,11 +69,12 @@ extension RouteListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return routeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RouteCellView.reuseID, for: indexPath) as! RouteCellView
+        cell.setText(with: routeList[indexPath.row])
         return cell
     }
     

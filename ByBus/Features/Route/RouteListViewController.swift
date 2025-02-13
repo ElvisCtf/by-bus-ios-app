@@ -8,7 +8,8 @@
 import UIKit
 
 class RouteListViewController: UIViewController {
-    private lazy var routeListView = RouteListView()
+    private let viewModel = RouteListViewModel()
+    private lazy var routeListView = RouteListView(with: viewModel)
 
     override func viewDidLoad() {
         super.viewDidLoad()
