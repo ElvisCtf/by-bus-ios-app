@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FC1A5EBC2D5B095400DC2B79 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A5EBB2D5B094D00DC2B79 /* APIRequest.swift */; };
 		FC1A5EBE2D5B325E00DC2B79 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A5EBD2D5B325800DC2B79 /* Data+Ext.swift */; };
+		FC1A5EC12D5B37BC00DC2B79 /* RouteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A5EC02D5B37B500DC2B79 /* RouteListViewModel.swift */; };
 		FC2D00282D082B3D00D8AA22 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2D00272D082B3D00D8AA22 /* UIView+Ext.swift */; };
 		FC434C5A2CF85D8900B3B73F /* UINavigationController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */; };
 		FC6CF9992D55F04100FC23DF /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = FC6CF9982D55F04100FC23DF /* RxBlocking */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		FC1A5EBB2D5B094D00DC2B79 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		FC1A5EBD2D5B325800DC2B79 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
+		FC1A5EC02D5B37B500DC2B79 /* RouteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListViewModel.swift; sourceTree = "<group>"; };
 		FC2D00272D082B3D00D8AA22 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
 		FC7C1C3F2D0694E800455623 /* RouteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC1A5EBF2D5B37A900DC2B79 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				FC7C1C412D06970000455623 /* RouteCellView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		FC434C572CF85D4200B3B73F /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,9 +238,10 @@
 		FCA7A4962CF5C4A20028858E /* Route */ = {
 			isa = PBXGroup;
 			children = (
+				FC1A5EC02D5B37B500DC2B79 /* RouteListViewModel.swift */,
 				FCA7A4622CF5B2080028858E /* RouteListViewController.swift */,
 				FC7C1C3F2D0694E800455623 /* RouteListView.swift */,
-				FC7C1C412D06970000455623 /* RouteCellView.swift */,
+				FC1A5EBF2D5B37A900DC2B79 /* Subviews */,
 			);
 			path = Route;
 			sourceTree = "<group>";
@@ -396,6 +407,7 @@
 				FC2D00282D082B3D00D8AA22 /* UIView+Ext.swift in Sources */,
 				FCA7A4632CF5B2080028858E /* RouteListViewController.swift in Sources */,
 				FCA7A45F2CF5B2080028858E /* AppDelegate.swift in Sources */,
+				FC1A5EC12D5B37BC00DC2B79 /* RouteListViewModel.swift in Sources */,
 				FC7C1C422D06970000455623 /* RouteCellView.swift in Sources */,
 				FC7C1C402D0694E800455623 /* RouteListView.swift in Sources */,
 				FCE60B2E2D3F5DC800F92DB7 /* APIService.swift in Sources */,

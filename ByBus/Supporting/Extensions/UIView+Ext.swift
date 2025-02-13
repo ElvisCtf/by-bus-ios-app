@@ -72,6 +72,24 @@ extension UIStackView {
 }
 
 
+// MARK: - UITableView
+extension UITableView {
+    static func plain(id: String = "", backgroundColor: UIColor = .clear, separateStyle: UITableViewCell.SeparatorStyle = .none) -> UITableView {
+        var tv = UITableView(frame: .zero, style: .plain)
+        tv.backgroundColor = .clear
+        tv.separatorStyle = .none
+        tv.accessibilityIdentifier = id
+        return tv
+    }
+    
+    func reload() {
+        DispatchQueue.main.async {
+            self.reloadData()
+        }
+    }
+}
+
+
 // MARK: - UIView
 extension UIView {
     static func plain(cornerRadius: CGFloat = 0, isClipsToBounds: Bool = false, bgColor: UIColor = .clear) -> UIView {

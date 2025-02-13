@@ -11,7 +11,7 @@ import Foundation
 struct RouteListResponseDto: Codable {
     let type, version: String?
     let generatedTimestamp: Date?
-    let data: [Datum]?
+    let data: [Route]?
 
     enum CodingKeys: String, CodingKey {
         case type, version
@@ -20,8 +20,8 @@ struct RouteListResponseDto: Codable {
     }
 }
 
-// MARK: - Datum
-struct Datum: Codable {
+// MARK: - Route
+struct Route: Codable {
     let company: Company?
     let routeNo: String?
     let origTc, origEn, origSc: String?
@@ -43,4 +43,18 @@ struct Datum: Codable {
 
 enum Company: String, Codable {
     case ctb = "CTB"
+    
+    var zhName: String {
+        switch self {
+        case .ctb:
+            return "城巴"
+        }
+    }
+    
+    var enName: String {
+        switch self {
+        case .ctb:
+            return "Citybus"
+        }
+    }
 }
