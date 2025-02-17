@@ -21,7 +21,7 @@ struct RouteListResponseDto: Codable {
 }
 
 // MARK: - Route
-struct Route: Codable {
+struct Route: Codable, Equatable {
     let company: Company?
     let routeNo: String?
     let origTc, origEn, origSc: String?
