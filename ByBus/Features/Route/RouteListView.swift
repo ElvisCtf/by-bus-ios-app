@@ -22,21 +22,29 @@ final class RouteListView: UIView {
         return tv
     }()
     
-    private var routeList: [Route] {
-        return viewModel.routeListObservable.value
-    }
+    private lazy var searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: nil)
+        controller.searchBar.keyboardType = .asciiCapable
+        controller.searchResultsUpdater = self
+        controller.obscuresBackgroundDuringPresentation = false
+        controller.searchBar.placeholder = ""
+        return controller
+    }()
     
-    init(with viewModel: RouteListViewModel) {
+    weak var parentVC: UIViewController?
+    
+    init(parentVC: UIViewController, with viewModel: RouteListViewModel) {
+        self.parentVC = parentVC
         self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
         setLayout()
         setBinding()
-        viewModel.getRouteList()
     }
     
     private func setUI() {
         backgroundColor = .systemBackground
+        parentVC?.navigationItem.searchController = searchController
     }
     
     private func setLayout() {
@@ -49,6 +57,7 @@ final class RouteListView: UIView {
     
     private func setBinding() {
         viewModel.routeListObservable
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] list in
                 guard let self else { return }
                 self.tableView.reload()
@@ -69,16 +78,26 @@ extension RouteListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routeList.count
+        return viewModel.routeListObservable.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RouteCellView.reuseID, for: indexPath) as! RouteCellView
-        cell.setText(with: routeList[indexPath.row])
+        cell.setText(with: viewModel.routeListObservable.value[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("\(indexPath.row) selected")
+    }
+}
+
+
+// MARK: - UISearchController Delegate
+extension RouteListView: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchingText = searchController.searchBar.text {
+            viewModel.filterRouteList(by: searchingText, isSearchBarActive: searchController.isActive)
+        }
     }
 }
