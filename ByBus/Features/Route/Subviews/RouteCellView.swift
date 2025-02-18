@@ -14,9 +14,9 @@ final class RouteCellView: UITableViewCell {
     private let companyLbl = UILabel.plain(lines: 1, weight: .regular, size: 14, color: .label)
     private let routeNoLbl = UILabel.plain(lines: 1, weight: .semibold, size: 18, color: .label)
     private let destinLbl  = UILabel.plain(lines: 1, weight: .semibold, size: 18, color: .label)
-    private let originLbl  = UILabel.plain(lines: 1, weight: .regular, size: 18, color: .secondaryLabel)
-    private let fromLbl    = UILabel.plain(lines: 1, weight: .regular, size: 14, color: .secondaryLabel)
-    private let toLbl      = UILabel.plain(lines: 1, weight: .semibold, size: 14, color: .label)
+    private let originLbl  = UILabel.plain(lines: 1, weight: .semibold, size: 18, color: .label)
+    private let toLbl      = UILabel.plain(lines: 1, weight: .regular, size: 14, color: .label)
+    private let orLbl      = UILabel.plain(lines: 1, weight: .regular, size: 14, color: .label)
     
     private let lblVstack  = UIStackView.vertical(spacing: 8, padding: .zero)
     private let lblHstack1 = UIStackView.horizontal(spacing: 4, padding: .zero, distribution: .fill)
@@ -34,8 +34,8 @@ final class RouteCellView: UITableViewCell {
         
         companyLbl.setContentHuggingPriority(.defaultLow + 2, for: .horizontal)
         routeNoLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
-        fromLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         toLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
+        orLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         
         lblHstack1.alignment = .bottom
         lblHstack2.alignment = .bottom
@@ -50,7 +50,7 @@ final class RouteCellView: UITableViewCell {
         lblHstack1.addArrangedSubview(toLbl)
         lblHstack1.addArrangedSubview(destinLbl)
         
-        lblHstack2.addArrangedSubview(fromLbl)
+        lblHstack2.addArrangedSubview(orLbl)
         lblHstack2.addArrangedSubview(originLbl)
         
         lblVstack.addArrangedSubview(lblHstack1)
@@ -84,7 +84,7 @@ final class RouteCellView: UITableViewCell {
         routeNoLbl.text = route.routeNo
         destinLbl.text  = route.destTc
         originLbl.text  = route.origTc
-        fromLbl.text    = "從"
+        orLbl.text      = "或"
         toLbl.text      = "往"
     }
     
