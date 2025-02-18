@@ -41,6 +41,7 @@ struct Route: Codable, Equatable {
     }
 }
 
+// MARK: - Company
 enum Company: String, Codable {
     case ctb = "CTB"
     
