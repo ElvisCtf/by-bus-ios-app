@@ -12,9 +12,9 @@ final class RouteListViewModel {
     let routeListObservable = BehaviorRelay<[Route]>.init(value: [])
     private var routeList = [Route]()
     private var filteredRouteList = [Route]()
-    private let apiService: APIService
+    private let apiService: APIServiceProtocol
     
-    init(apiServie: APIService = APIService()) {
+    init(apiServie: APIServiceProtocol = APIService()) {
         self.apiService = apiServie
     }
     
