@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC1333C62D646353003201F3 /* BusStopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1333C52D646353003201F3 /* BusStopViewController.swift */; };
+		FC1333C82D6463CB003201F3 /* BusStopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1333C72D6463C6003201F3 /* BusStopView.swift */; };
 		FC1A5EBC2D5B095400DC2B79 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A5EBB2D5B094D00DC2B79 /* APIRequest.swift */; };
 		FC1A5EBE2D5B325E00DC2B79 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A5EBD2D5B325800DC2B79 /* Data+Ext.swift */; };
 		FC1A5EC12D5B37BC00DC2B79 /* RouteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A5EC02D5B37B500DC2B79 /* RouteListViewModel.swift */; };
@@ -15,6 +17,8 @@
 		FC6CF9992D55F04100FC23DF /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = FC6CF9982D55F04100FC23DF /* RxBlocking */; };
 		FC6CF99B2D55F04100FC23DF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = FC6CF99A2D55F04100FC23DF /* RxCocoa */; };
 		FC6CF99D2D55F04100FC23DF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = FC6CF99C2D55F04100FC23DF /* RxRelay */; };
+		FC6FDCDC2D78559F008A1224 /* SwapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FDCDB2D78559B008A1224 /* SwapperView.swift */; };
+		FC6FDCDE2D7855D7008A1224 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FDCDD2D7855D3008A1224 /* PaddedLabel.swift */; };
 		FC7C1C402D0694E800455623 /* RouteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7C1C3F2D0694E800455623 /* RouteListView.swift */; };
 		FC7C1C422D06970000455623 /* RouteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7C1C412D06970000455623 /* RouteCellView.swift */; };
 		FC7D6C4B2D3E3A5C004649BA /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D6C4A2D3E3A5C004649BA /* Endpoints.swift */; };
@@ -53,11 +57,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC1333C52D646353003201F3 /* BusStopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopViewController.swift; sourceTree = "<group>"; };
+		FC1333C72D6463C6003201F3 /* BusStopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopView.swift; sourceTree = "<group>"; };
 		FC1A5EBB2D5B094D00DC2B79 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		FC1A5EBD2D5B325800DC2B79 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		FC1A5EC02D5B37B500DC2B79 /* RouteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListViewModel.swift; sourceTree = "<group>"; };
 		FC2D00272D082B3D00D8AA22 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		FC434C592CF85D8900B3B73F /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
+		FC6FDCDB2D78559B008A1224 /* SwapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapperView.swift; sourceTree = "<group>"; };
+		FC6FDCDD2D7855D3008A1224 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		FC7C1C3F2D0694E800455623 /* RouteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListView.swift; sourceTree = "<group>"; };
 		FC7C1C412D06970000455623 /* RouteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCellView.swift; sourceTree = "<group>"; };
 		FC7D6C4A2D3E3A5C004649BA /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
@@ -110,6 +118,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC1333C42D646320003201F3 /* BusStop */ = {
+			isa = PBXGroup;
+			children = (
+				FC1333C52D646353003201F3 /* BusStopViewController.swift */,
+				FC1333C72D6463C6003201F3 /* BusStopView.swift */,
+				FC1333C92D64697C003201F3 /* Subviews */,
+			);
+			path = BusStop;
+			sourceTree = "<group>";
+		};
+		FC1333C92D64697C003201F3 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				FC6FDCDD2D7855D3008A1224 /* PaddedLabel.swift */,
+				FC6FDCDB2D78559B008A1224 /* SwapperView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		FC1A5EBF2D5B37A900DC2B79 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +256,7 @@
 			children = (
 				FCA7A49A2CF5C5470028858E /* TabBarController.swift */,
 				FCA7A4962CF5C4A20028858E /* Route */,
+				FC1333C42D646320003201F3 /* BusStop */,
 				FCA7A4992CF5C4B70028858E /* Bookmark */,
 				FCA7A49E2CF5C6410028858E /* Setting */,
 			);
@@ -415,8 +443,12 @@
 				FCA7A4612CF5B2080028858E /* SceneDelegate.swift in Sources */,
 				FCA7A49D2CF5C63D0028858E /* SettingViewController.swift in Sources */,
 				FC991C3F2D433300001AC049 /* NetworkManager.swift in Sources */,
+				FC6FDCDC2D78559F008A1224 /* SwapperView.swift in Sources */,
 				FC7D6C4E2D3E43DC004649BA /* RouteListResponseDto.swift in Sources */,
 				FC1A5EBC2D5B095400DC2B79 /* APIRequest.swift in Sources */,
+				FC1333C82D6463CB003201F3 /* BusStopView.swift in Sources */,
+				FC1333C62D646353003201F3 /* BusStopViewController.swift in Sources */,
+				FC6FDCDE2D7855D7008A1224 /* PaddedLabel.swift in Sources */,
 				FC7D6C4B2D3E3A5C004649BA /* Endpoints.swift in Sources */,
 				FC1A5EBE2D5B325E00DC2B79 /* Data+Ext.swift in Sources */,
 			);

@@ -45,4 +45,8 @@ final class RouteListViewModel {
         }
         self.routeListObservable.accept(filteredRouteList)
     }
+    
+    func getRoute(_ index: Int) -> Route {
+        return routeListObservable.value[index]
+    }
 }

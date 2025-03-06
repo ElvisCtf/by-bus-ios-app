@@ -20,6 +20,7 @@ class RouteListViewController: UIViewController {
     func setUI() {
         view = routeListView
         definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
 }
 

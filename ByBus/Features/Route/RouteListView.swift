@@ -83,12 +83,13 @@ extension RouteListView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RouteCellView.reuseID, for: indexPath) as! RouteCellView
-        cell.setText(with: viewModel.routeListObservable.value[indexPath.row])
+        cell.setText(with: viewModel.getRoute(indexPath.row))
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(indexPath.row) selected")
+        let busStopVC = BusStopViewController(route: viewModel.getRoute(indexPath.row))
+        parentVC?.navigationController?.pushViewController(busStopVC, animated: true)
     }
 }
 
