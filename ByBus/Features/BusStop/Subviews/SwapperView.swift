@@ -10,12 +10,12 @@ import SnapKit
 
 final class SwapperView: UIView {
     private let originIcon = UIImageView.system(name: "circle", color: .label)
-    private let dotIcon = UIImageView.system(name: "ellipsis", color: .label)
-    private let destinIcon = UIImageView.system(name: "mappin.and.ellipse", color: .label)
+    private let dotIcon = UIImageView.system(name: "arrow.down", color: .label)
+    private let destinIcon = UIImageView.system(name: "mappin.and.ellipse", color: .systemRed)
     private let iconVstack = UIStackView.vertical(spacing: 10, padding: .zero)
     
     private let originLbl = PaddedLabel(weight: .regular, size: 17, color: .label, padding: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16), borderColor: .systemGray2)
-    private let destinLbl = PaddedLabel(weight: .regular, size: 17, color: .label, padding: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16), borderColor: .systemGray2)
+    private let destinLbl = PaddedLabel(weight: .semibold, size: 17, color: .label, padding: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16), borderColor: .systemGray2)
    
     let swapBtn = UIButton.icon(imgName: "arrow.up.arrow.down", bgColor: .clear, imgColor: .systemBlue)
     
@@ -40,7 +40,6 @@ final class SwapperView: UIView {
             $0.size.equalTo(16)
         }
         
-        dotIcon.transform = CGAffineTransform(rotationAngle: .pi / 2)
         dotIcon.snp.makeConstraints {
             $0.size.equalTo(16)
         }

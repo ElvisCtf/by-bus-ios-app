@@ -18,6 +18,7 @@ class RouteListViewController: UIViewController {
     }
     
     func setUI() {
+        title = "路線"
         view = routeListView
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false

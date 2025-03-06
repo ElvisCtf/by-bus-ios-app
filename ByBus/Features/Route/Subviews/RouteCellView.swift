@@ -11,12 +11,12 @@ import SnapKit
 final class RouteCellView: UITableViewCell {
     static let reuseID = "RouteCellView"
     
-    private let companyLbl = UILabel.plain(lines: 1, weight: .regular, size: 14, color: .label)
-    private let routeNoLbl = UILabel.plain(lines: 1, weight: .semibold, size: 18, color: .label)
-    private let destinLbl  = UILabel.plain(lines: 1, weight: .semibold, size: 18, color: .label)
-    private let originLbl  = UILabel.plain(lines: 1, weight: .semibold, size: 18, color: .label)
-    private let toLbl      = UILabel.plain(lines: 1, weight: .regular, size: 14, color: .label)
-    private let orLbl      = UILabel.plain(lines: 1, weight: .regular, size: 14, color: .label)
+    private let companyLbl = UILabel.plain(lines: 1, weight: .regular, size: 13, color: .label)
+    private let routeNoLbl = UILabel.plain(lines: 1, alignment: .center, weight: .semibold, size: 17, color: .label)
+    private let originLbl  = UILabel.plain(lines: 1, weight: .regular, size: 17, color: .label)
+    private let destinLbl  = UILabel.plain(lines: 1, weight: .semibold, size: 17, color: .label)
+    private let fromLbl      = UILabel.plain(lines: 1, weight: .regular, size: 13, color: .label)
+    private let toLbl      = UILabel.plain(lines: 1, weight: .regular, size: 13, color: .label)
     
     private let lblVstack  = UIStackView.vertical(spacing: 8, padding: .zero)
     private let lblHstack1 = UIStackView.horizontal(spacing: 4, padding: .zero, distribution: .fill)
@@ -35,7 +35,7 @@ final class RouteCellView: UITableViewCell {
         companyLbl.setContentHuggingPriority(.defaultLow + 2, for: .horizontal)
         routeNoLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         toLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
-        orLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
+        fromLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         
         lblHstack1.alignment = .bottom
         lblHstack2.alignment = .bottom
@@ -47,28 +47,23 @@ final class RouteCellView: UITableViewCell {
         contentView.addSubview(lblVstack)
         contentView.addSubview(separator)
         
-        lblHstack1.addArrangedSubview(toLbl)
-        lblHstack1.addArrangedSubview(destinLbl)
-        
-        lblHstack2.addArrangedSubview(orLbl)
-        lblHstack2.addArrangedSubview(originLbl)
-        
-        lblVstack.addArrangedSubview(lblHstack1)
-        lblVstack.addArrangedSubview(lblHstack2)
+        lblHstack1.addSubviews([fromLbl, originLbl])
+        lblHstack2.addSubviews([toLbl, destinLbl])
+        lblVstack.addSubviews([lblHstack1, lblHstack2])
         
         companyLbl.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(8)
+            $0.left.equalToSuperview().inset(16)
             $0.top.bottom.equalToSuperview().inset(12)
         }
         
         routeNoLbl.snp.makeConstraints {
             $0.left.equalTo(companyLbl.snp.right).offset(16)
             $0.top.bottom.equalToSuperview().inset(12)
-            $0.width.equalTo(50)
+            $0.width.equalTo(48)
         }
         
         lblVstack.snp.makeConstraints {
-            $0.left.equalTo(routeNoLbl.snp.right).offset(32)
+            $0.left.equalTo(routeNoLbl.snp.right).offset(24)
             $0.right.equalToSuperview().inset(8)
             $0.top.bottom.equalToSuperview().inset(12)
         }
@@ -84,7 +79,7 @@ final class RouteCellView: UITableViewCell {
         routeNoLbl.text = route.routeNo
         destinLbl.text  = route.destTc
         originLbl.text  = route.origTc
-        orLbl.text      = "或"
+        fromLbl.text    = "由"
         toLbl.text      = "往"
     }
     
