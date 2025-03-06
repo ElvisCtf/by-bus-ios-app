@@ -44,6 +44,47 @@ extension UILabel {
 }
 
 
+// MARK: - UIImageView
+extension UIImageView {
+    static func system(id: String = "", name: String, color: UIColor, contenMode: UIView.ContentMode = .scaleAspectFill) -> UIImageView {
+        let img = UIImage(systemName: name)?.withRenderingMode(.alwaysTemplate)
+        let imgView = UIImageView(image: img)
+        imgView.addAccessibilityID(id)
+        imgView.contentMode = contenMode
+        imgView.tintColor = color
+        return imgView
+    }
+}
+
+// MARK: - UIButton
+extension UIButton {
+    static func filled(id: String = "", weight: UIFont.Weight, size: CGFloat, textColor: UIColor, text: String? = "", bgColor: UIColor, cornerRadius: CGFloat, padding: NSDirectionalEdgeInsets) -> UIButton {
+        var config = UIButton.Configuration.filled()
+        config.title = text
+        config.baseBackgroundColor = bgColor
+        config.baseForegroundColor = textColor
+        config.contentInsets = padding
+        
+        let btn = UIButton(configuration: config)
+        btn.addAccessibilityID(id)
+        btn.titleLabel?.font = .systemFont(ofSize: size, weight: weight)
+        return btn
+    }
+    
+    static func icon(id: String = "", imgName: String, bgColor: UIColor, imgColor: UIColor = .white) -> UIButton {
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(systemName: imgName)
+        config.imagePlacement = .all
+        config.baseBackgroundColor = bgColor
+        config.baseForegroundColor = imgColor
+        
+        let btn = UIButton(configuration: config)
+        btn.addAccessibilityID(id)
+        return btn
+    }
+}
+
+
 // MARK: - UIStackView
 extension UIStackView {
     static func vertical(spacing: CGFloat, padding: UIEdgeInsets, distribution: UIStackView.Distribution = .fillEqually, alignment: UIStackView.Alignment = .fill) -> UIStackView {
