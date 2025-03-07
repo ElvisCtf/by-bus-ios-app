@@ -11,12 +11,12 @@ import Foundation
 struct RouteStopsResponseDto: Codable {
     let type, version: String?
     let generatedTimestamp: Date?
-    let data: [RouteStop]?
+    let routeStops: [RouteStop]?
 
     enum CodingKeys: String, CodingKey {
         case type, version
         case generatedTimestamp = "generated_timestamp"
-        case data
+        case routeStops = "data"
     }
 }
 
@@ -26,7 +26,7 @@ struct RouteStop: Codable {
     let route: String?
     let direction: Direction?
     let sequence: Int?
-    let stop: String?
+    let id: String?
     let dataTimestamp: Date?
 
     enum CodingKeys: String, CodingKey {
@@ -34,7 +34,7 @@ struct RouteStop: Codable {
         case route
         case direction = "dir"
         case sequence = "seq"
-        case stop
+        case id = "stop"
         case dataTimestamp = "data_timestamp"
     }
 }
@@ -46,9 +46,18 @@ enum Direction: String, Codable {
     var value: String {
         switch self {
         case .inbound:
-            return "Inbound"
+            return "inbound"
         case .outbound:
-            return "Outbound"
+            return "outbound"
+        }
+    }
+    
+    var toggle: Self {
+        switch self {
+        case .inbound:
+            return .outbound
+        case .outbound:
+            return .inbound
         }
     }
 }

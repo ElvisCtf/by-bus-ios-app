@@ -8,7 +8,7 @@
 struct BusStop {
     let index: Int
     let name: String
-    var arriveTimeList: [String]
+    var arriveTimeList: [String] = []
     var isExpanded = false
     
     var arriveTime: String {

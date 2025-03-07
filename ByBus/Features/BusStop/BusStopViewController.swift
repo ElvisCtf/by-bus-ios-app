@@ -8,7 +8,9 @@
 import UIKit
 
 class BusStopViewController: UIViewController {
-    private lazy var busStopView = BusStopView(with: route)
+    private lazy var busStopView = BusStopView(with: route, and: viewModel)
+    private let viewModel = BusStopViewModel()
+    
     private var route: Route
     
     override func viewWillAppear(_ animated: Bool) {

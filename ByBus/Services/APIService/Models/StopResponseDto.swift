@@ -11,19 +11,19 @@ import Foundation
 struct StopResponseDto: Codable {
     let type, version: String?
     let generatedTimestamp: Date?
-    let data: Stop?
+    let stop: Stop?
 
     enum CodingKeys: String, CodingKey {
         case type, version
         case generatedTimestamp = "generated_timestamp"
-        case data
+        case stop = "data"
     }
 }
 
 // MARK: - Stop
 struct Stop: Codable {
     let id, nameTc, nameEn, nameSc: String?
-    let lat, long: Double?
+    let lat, long: String?
     let dataTimestamp: Date?
 
     enum CodingKeys: String, CodingKey {
