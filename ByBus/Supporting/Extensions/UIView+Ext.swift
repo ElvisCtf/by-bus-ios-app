@@ -122,12 +122,6 @@ extension UITableView {
         tv.accessibilityIdentifier = id
         return tv
     }
-    
-    func reload() {
-        DispatchQueue.main.async {
-            self.reloadData()
-        }
-    }
 }
 
 
