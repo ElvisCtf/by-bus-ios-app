@@ -57,11 +57,10 @@ final class RoutesView: UIView {
     }
     
     private func setBinding() {
-        viewModel.routesRelay
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] list in
+        viewModel.reloadDataRelay.asSignal()
+            .emit(onNext: { [weak self] in
                 guard let self else { return }
-                self.tableView.reload()
+                self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -79,17 +78,17 @@ extension RoutesView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.routesRelay.value.count
+        return viewModel.displayRoutes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RouteCellView.reuseID, for: indexPath) as! RouteCellView
-        cell.setText(with: viewModel.getRoute(indexPath.row))
+        cell.setText(with: viewModel.displayRoutes[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let busStopVC = BusStopViewController(route: viewModel.getRoute(indexPath.row))
+        let busStopVC = BusStopViewController(route: viewModel.displayRoutes[indexPath.row])
         parentVC?.navigationController?.pushViewController(busStopVC, animated: true)
     }
 }
