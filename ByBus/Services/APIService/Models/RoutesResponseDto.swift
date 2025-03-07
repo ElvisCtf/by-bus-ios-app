@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - RouteListResponseDto
+// MARK: - RoutesResponseDto
 struct RoutesResponseDto: Codable {
     let type, version: String?
     let generatedTimestamp: Date?
