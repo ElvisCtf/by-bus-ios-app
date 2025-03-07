@@ -7,21 +7,20 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class BusStopView: UIView {
     static let name = "BusStopView"
+    
     private let route: Route
+    private let viewModel: BusStopViewModel
+    private var direction: Direction = .outbound
+    private let disposeBag = DisposeBag()
+    
     private let originDestinView = SwapperView()
     private let separator = UIView.plain(bgColor: .separator)
     let backBtn = UIButton.icon(imgName: "chevron.left", bgColor: .clear, imgColor: .systemBlue)
-    
-    var busStops = [
-        BusStop(index: 1, name: "abc", arriveTimeList: ["9:00","12:00","15:00"]),
-        BusStop(index: 2, name: "def", arriveTimeList: ["9:00","12:00","15:00"]),
-        BusStop(index: 3, name: "hij", arriveTimeList: ["9:00","12:00","15:00"]),
-        BusStop(index: 4, name: "klm", arriveTimeList: ["9:00","12:00","15:00"]),
-        BusStop(index: 5, name: "nop", arriveTimeList: ["9:00","12:00","15:00"])
-    ]
     
     private lazy var tableView: UITableView = {
         var tv = UITableView.plain(id: "\(Self.name)_table")
@@ -32,11 +31,14 @@ final class BusStopView: UIView {
         return tv
     }()
     
-    init(with route: Route) {
+    init(with route: Route, and viewModel: BusStopViewModel) {
         self.route = route
+        self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
         setLayout()
+        setBinding()
+        getBusStops()
     }
     
     private func setUI() {
@@ -70,7 +72,30 @@ final class BusStopView: UIView {
         
         tableView.snp.makeConstraints {
             $0.top.equalTo(separator.snp.bottom)
-            $0.left.right.bottom.equalToSuperview()
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+        }
+    }
+    
+    private func setBinding() {
+        viewModel.reloadDataRelay.asSignal()
+            .emit(onNext: { [weak self] in
+                guard let self else { return }
+                self.tableView.reloadData()
+        }).disposed(by: disposeBag)
+        
+        originDestinView.swapBtn.rx.tap.asSignal()
+            .emit(onNext: { [weak self] in
+                guard let self else { return }
+                self.direction = self.direction.toggle
+                self.originDestinView.swap()
+                self.getBusStops()
+        }).disposed(by: disposeBag)
+    }
+    
+    private func getBusStops() {
+        if let routeNo = route.routeNo {
+            viewModel.getBusStops(no: routeNo, direction: direction)
         }
     }
     
@@ -83,7 +108,7 @@ final class BusStopView: UIView {
 // MARK: - Table View Delegate
 extension BusStopView: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return busStops.count
+        return viewModel.busStops.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -91,7 +116,7 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let busStop = busStops[indexPath.section]
+        let busStop = viewModel.busStops[indexPath.section]
         
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: SectionCellView.reuseID, for: indexPath) as! SectionCellView
@@ -107,13 +132,13 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let childIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
         if indexPath.row == 0 {
-            busStops[indexPath.section].isExpanded.toggle()
+            viewModel.busStops[indexPath.section].isExpanded.toggle()
             tableView.reloadRows(at: [childIndexPath], with: .automatic)
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let busStop = busStops[indexPath.section]
+        let busStop = viewModel.busStops[indexPath.section]
         if indexPath.row == 0 {
             return UITableView.automaticDimension
         }

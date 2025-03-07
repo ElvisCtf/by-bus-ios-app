@@ -79,6 +79,12 @@ final class SwapperView: UIView {
         destinLbl.text = destin
     }
     
+    func swap() {
+        let temp = originLbl.text
+        originLbl.text = destinLbl.text
+        destinLbl.text = temp
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
