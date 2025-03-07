@@ -1,5 +1,5 @@
 //
-//  RouteListResponseDto.swift
+//  RoutesResponseDto.swift
 //  ByBus
 //
 //  Created by Elvis Cheng on 20/1/2025.
@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - RouteListResponseDto
-struct RouteListResponseDto: Codable {
+struct RoutesResponseDto: Codable {
     let type, version: String?
     let generatedTimestamp: Date?
     let data: [Route]?
