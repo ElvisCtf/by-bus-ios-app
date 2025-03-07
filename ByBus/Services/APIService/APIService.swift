@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol APIServiceProtocol: AnyObject {
-    func getRouteList(completion: @escaping (Bool, RoutesResponseDto?, Error?) -> Void)
+    func getRoutes(completion: @escaping (Bool, RoutesResponseDto?, Error?) -> Void)
     func getRouteStops(no: String, direction: String, completion: @escaping (Bool, RouteStopsResponseDto?, Error?) -> Void)
     func getStop(id: String, index: Int, completion: @escaping (Bool, StopResponseDto?, Int, Error?) -> Void)
 }
@@ -17,7 +17,7 @@ protocol APIServiceProtocol: AnyObject {
 final class APIService: APIServiceProtocol {
     private let disposeBag = DisposeBag()
     
-    func getRouteList(completion: @escaping (Bool, RoutesResponseDto?, Error?) -> Void) {
+    func getRoutes(completion: @escaping (Bool, RoutesResponseDto?, Error?) -> Void) {
         let request = APIRequest().make(with: Endpoints.routes)
         NetworkManager.shared
             .send(with: request, as: RoutesResponseDto.self)

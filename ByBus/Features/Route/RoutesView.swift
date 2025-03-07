@@ -1,5 +1,5 @@
 //
-//  RouteListView.swift
+//  RoutesView.swift
 //  ByBus
 //
 //  Created by Elvis Cheng on 9/12/2024.
@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import RxSwift
 
-final class RouteListView: UIView {
-    static let name = "RouteListView"
-    private let viewModel: RouteListViewModel
+final class RoutesView: UIView {
+    static let name = "Routes"
+    private let viewModel: RoutesViewModel
     private let disposeBag = DisposeBag()
     
     private lazy var tableView: UITableView = {
@@ -33,13 +33,14 @@ final class RouteListView: UIView {
     
     weak var parentVC: UIViewController?
     
-    init(parentVC: UIViewController, with viewModel: RouteListViewModel) {
+    init(parentVC: UIViewController, with viewModel: RoutesViewModel) {
         self.parentVC = parentVC
         self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
         setLayout()
         setBinding()
+        viewModel.getRoutes()
     }
     
     private func setUI() {
@@ -56,7 +57,7 @@ final class RouteListView: UIView {
     }
     
     private func setBinding() {
-        viewModel.routeListObservable
+        viewModel.routesRelay
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] list in
                 guard let self else { return }
@@ -72,13 +73,13 @@ final class RouteListView: UIView {
 
 
 // MARK: - Table View Delegate
-extension RouteListView: UITableViewDelegate, UITableViewDataSource {
+extension RoutesView: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.routeListObservable.value.count
+        return viewModel.routesRelay.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,10 +96,10 @@ extension RouteListView: UITableViewDelegate, UITableViewDataSource {
 
 
 // MARK: - UISearchController Delegate
-extension RouteListView: UISearchResultsUpdating {
+extension RoutesView: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchingText = searchController.searchBar.text {
-            viewModel.filterRouteList(by: searchingText, isSearchBarActive: searchController.isActive)
+            viewModel.filterRoutes(by: searchingText, isSearchBarActive: searchController.isActive)
         }
     }
 }
