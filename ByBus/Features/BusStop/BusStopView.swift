@@ -84,6 +84,12 @@ final class BusStopView: UIView {
                 self.tableView.reloadData()
         }).disposed(by: disposeBag)
         
+        viewModel.reloadRowRelay.asSignal()
+            .emit(onNext: { [weak self] indexPath in
+                guard let self else { return }
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }).disposed(by: disposeBag)
+        
         originDestinView.swapBtn.rx.tap.asSignal()
             .emit(onNext: { [weak self] in
                 guard let self else { return }
@@ -130,10 +136,15 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let childIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+        let childIndexPath = IndexPath(row: 1, section: indexPath.section)
         if indexPath.row == 0 {
             viewModel.busStops[indexPath.section].isExpanded.toggle()
-            tableView.reloadRows(at: [childIndexPath], with: .automatic)
+            let busStop = viewModel.busStops[indexPath.section]
+            if busStop.isExpanded {
+                viewModel.getEta(index: indexPath.section, stopID: busStop.id, routeNo: busStop.routeNo)
+            } else {
+                tableView.reloadRows(at: [childIndexPath], with: .automatic)
+            }
         }
     }
     

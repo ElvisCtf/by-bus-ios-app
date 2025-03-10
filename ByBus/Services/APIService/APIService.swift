@@ -12,6 +12,7 @@ protocol APIServiceProtocol: AnyObject {
     func getRoutes(completion: @escaping (Bool, RoutesResponseDto?, Error?) -> Void)
     func getRouteStops(no: String, direction: String, completion: @escaping (Bool, RouteStopsResponseDto?, Error?) -> Void)
     func getStop(id: String, index: Int, completion: @escaping (Bool, StopResponseDto?, Int, Error?) -> Void)
+    func getEta(stopID: String, routeNo: String, completion: @escaping (Bool, EtaResponseDto?, Error?) -> Void)
 }
 
 final class APIService: APIServiceProtocol {
@@ -49,6 +50,18 @@ final class APIService: APIServiceProtocol {
                 completion(true, data, index, nil)
             },onFailure: { error in
                 completion(false, nil, index, error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func getEta(stopID: String, routeNo: String, completion: @escaping (Bool, EtaResponseDto?, Error?) -> Void) {
+        let request = APIRequest(path: "\(stopID)/\(routeNo)").make(with: Endpoints.estimatedTimeOfArrival)
+        NetworkManager.shared
+            .send(with: request, as: EtaResponseDto.self)
+            .subscribe(onSuccess: { data in
+                completion(true, data, nil)
+            },onFailure: { error in
+                completion(false, nil, error)
             })
             .disposed(by: disposeBag)
     }
