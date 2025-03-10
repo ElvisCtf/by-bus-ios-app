@@ -37,6 +37,7 @@ class BusStopViewController: UIViewController {
     
     private func setUI() {
         view = busStopView
+        navigationItem.hidesBackButton = true
         busStopView.backBtn.addTarget(self, action: #selector(onBack), for: .touchUpInside)
     }
     
