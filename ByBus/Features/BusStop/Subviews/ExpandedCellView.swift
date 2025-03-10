@@ -40,3 +40,15 @@ final class ExpandedCellView: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+
+// MARK: - Accessibiltiy Identifier
+extension ExpandedCellView {
+    enum UI: String {
+        case arrivalTimeLbl = "arrivalTimeLabel"
+        
+        var id: String {
+            return "\(reuseID)_\(rawValue)"
+        }
+    }
+}

@@ -20,10 +20,10 @@ final class BusStopView: UIView {
     
     private let originDestinView = SwapperView()
     private let separator = UIView.plain(bgColor: .separator)
-    let backBtn = UIButton.icon(imgName: "chevron.left", bgColor: .clear, imgColor: .systemBlue)
+    let backBtn = UIButton.icon(id: UI.backBtn.id, imgName: "chevron.left", bgColor: .clear, imgColor: .systemBlue)
     
     private lazy var tableView: UITableView = {
-        var tv = UITableView.plain(id: "\(Self.name)_table")
+        var tv = UITableView.plain(id: UI.tableView.id)
         tv.delegate = self
         tv.dataSource = self
         tv.register(SectionCellView.self, forCellReuseIdentifier: SectionCellView.reuseID)
@@ -154,5 +154,18 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
             return UITableView.automaticDimension
         }
         return busStop.isExpanded ? UITableView.automaticDimension : 0
+    }
+}
+
+
+// MARK: - Accessibility Identifier
+extension BusStopView {
+    enum UI: String {
+        case tableView = "tableView"
+        case backBtn   = "backButton"
+        
+        var id: String {
+            return "\(name)_\(rawValue)"
+        }
     }
 }
