@@ -11,12 +11,12 @@ import SnapKit
 final class RouteCellView: UITableViewCell {
     static let reuseID = "RouteCellView"
     
-    private let companyLbl = UILabel.plain(lines: 1, weight: .regular, size: 13, color: .label)
-    private let routeNoLbl = UILabel.plain(lines: 1, alignment: .center, weight: .semibold, size: 17, color: .label)
-    private let originLbl  = UILabel.plain(lines: 1, weight: .regular, size: 17, color: .label)
-    private let destinLbl  = UILabel.plain(lines: 1, weight: .semibold, size: 17, color: .label)
-    private let fromLbl      = UILabel.plain(lines: 1, weight: .regular, size: 13, color: .label)
-    private let toLbl      = UILabel.plain(lines: 1, weight: .regular, size: 13, color: .label)
+    private let companyLbl = UILabel.plain(id: UI.company.id, lines: 1, weight: .regular, size: 13, color: .label)
+    private let routeNoLbl = UILabel.plain(id: UI.routeNo.id, lines: 1, alignment: .center, weight: .semibold, size: 17, color: .label)
+    private let originLbl  = UILabel.plain(id: UI.origin.id, lines: 1, weight: .regular, size: 17, color: .label)
+    private let destinLbl  = UILabel.plain(id: UI.destin.id, lines: 1, weight: .semibold, size: 17, color: .label)
+    private let fromLbl    = UILabel.plain(id: UI.from.id, lines: 1, weight: .regular, size: 13, color: .label)
+    private let toLbl      = UILabel.plain(id: UI.to.id, lines: 1, weight: .regular, size: 13, color: .label)
     
     private let lblVstack  = UIStackView.vertical(spacing: 8, padding: .zero)
     private let lblHstack1 = UIStackView.horizontal(spacing: 4, padding: .zero, distribution: .fill)
@@ -88,3 +88,19 @@ final class RouteCellView: UITableViewCell {
     }
 }
 
+
+// MARK: - Accessibility Identifier
+extension RouteCellView {
+    enum UI: String {
+        case company = "companyLabel"
+        case routeNo = "routeNumberLabel"
+        case destin  = "destinationLabel"
+        case origin  = "originLabel"
+        case from    = "fromLabel"
+        case to      = "toLabel"
+        
+        var id : String {
+            return "\(reuseID)_\(rawValue)"
+        }
+    }
+}
