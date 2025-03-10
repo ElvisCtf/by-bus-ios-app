@@ -10,7 +10,7 @@ import SnapKit
 
 final class SectionCellView: UITableViewCell {
     static let reuseID = "SectionCellView"
-    private let stopLbl = UILabel.plain(lines: 1, weight: .regular, size: 17, color: .label)
+    private let stopLbl = UILabel.plain(id: "\(reuseID)_stopLabel", lines: 1, weight: .regular, size: 17, color: .label)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
