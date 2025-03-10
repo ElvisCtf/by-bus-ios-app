@@ -40,7 +40,6 @@ final class RoutesView: UIView {
         setUI()
         setLayout()
         setBinding()
-        viewModel.getRoutes()
     }
     
     private func setUI() {
