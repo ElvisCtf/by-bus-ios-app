@@ -11,12 +11,12 @@ import Foundation
 struct RoutesResponseDto: Codable {
     let type, version: String?
     let generatedTimestamp: Date?
-    let data: [Route]?
+    let routes: [Route]?
 
     enum CodingKeys: String, CodingKey {
         case type, version
         case generatedTimestamp = "generated_timestamp"
-        case data
+        case routes = "data"
     }
 }
 

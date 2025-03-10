@@ -9,27 +9,17 @@ import RxSwift
 import RxCocoa
 
 final class RoutesViewModel {
+    private var routes: [Route]
+    private let apiService: APIServiceProtocol
+    
     let reloadDataRelay = PublishRelay<Void>()
     var displayRoutes = [Route]()
     
-    private var routes = [Route]()
-    private let apiService: APIServiceProtocol
     
-    init(apiServie: APIServiceProtocol = APIService()) {
+    init(routes: [Route], apiServie: APIServiceProtocol = APIService()) {
+        self.routes = routes
+        self.displayRoutes = routes
         self.apiService = apiServie
-    }
-    
-    func getRoutes() {
-        apiService.getRoutes { [weak self] success, data, error in
-            guard let self else { return }
-            if success {
-                if let safeData = data, let fetchedRoutes = safeData.data {
-                    self.routes = fetchedRoutes
-                    self.displayRoutes = fetchedRoutes
-                    self.reloadDataRelay.accept(())
-                }
-            }
-        }
     }
     
     func filterRoutes(by searchingText: String, isSearchBarActive: Bool) {
@@ -44,5 +34,18 @@ final class RoutesViewModel {
             }
         }
         self.reloadDataRelay.accept(())
+    }
+    
+    func getRoutes() {
+        apiService.getRoutes { [weak self] success, data, error in
+            guard let self else { return }
+            if success {
+                if let data, let fetchedRoutes = data.routes {
+                    self.routes = fetchedRoutes
+                    self.displayRoutes = fetchedRoutes
+                    self.reloadDataRelay.accept(())
+                }
+            }
+        }
     }
 }
