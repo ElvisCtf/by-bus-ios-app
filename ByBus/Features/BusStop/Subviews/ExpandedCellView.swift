@@ -10,7 +10,7 @@ import SnapKit
 
 final class ExpandedCellView: UITableViewCell {
     static let reuseID = "ExpandedCellView"
-    private let arriveTimeLbl = UILabel.plain(weight: .regular, size: 15, color: .secondaryLabel)
+    private let arrivalTimeLbl = UILabel.plain(weight: .regular, size: 15, color: .secondaryLabel)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,16 +24,16 @@ final class ExpandedCellView: UITableViewCell {
     }
     
     private func setLayout() {
-        contentView.addSubview(arriveTimeLbl)
+        contentView.addSubview(arrivalTimeLbl)
         
-        arriveTimeLbl.snp.makeConstraints {
+        arrivalTimeLbl.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(8)
             $0.left.right.equalToSuperview().inset(16)
         }
     }
     
     func setText(with busStop: BusStop) {
-        arriveTimeLbl.text = busStop.arriveTime
+        arrivalTimeLbl.text = busStop.arrivalTime
     }
     
     required init?(coder: NSCoder) {

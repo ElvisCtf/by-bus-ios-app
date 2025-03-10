@@ -7,11 +7,22 @@
 
 struct BusStop {
     let index: Int
-    let name: String
-    var arriveTimeList: [String] = []
+    let id: String
+    let routeNo: String
+    let nameTc, nameEn, nameSc: String
+    var etas: [String] = []
     var isExpanded = false
     
-    var arriveTime: String {
-        arriveTimeList.joined(separator: "\n\n")
+    var arrivalTime: String {
+        etas.joined(separator: "\n\n")
+    }
+    
+    init(index: Int, routeNo: String, stop: Stop) {
+        self.index = index
+        self.id = stop.id ?? ""
+        self.routeNo = routeNo
+        self.nameTc = stop.nameTc ?? ""
+        self.nameEn = stop.nameEn ?? ""
+        self.nameSc = stop.nameSc ?? ""
     }
 }

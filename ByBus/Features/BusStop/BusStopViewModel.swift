@@ -11,6 +11,7 @@ import Foundation
 
 final class BusStopViewModel {
     let reloadDataRelay = PublishRelay<Void>()
+    let reloadRowRelay = PublishRelay<IndexPath>()
     var busStops = [BusStop]()
     
     private let busStopRelay = PublishRelay<BusStop>()
@@ -47,12 +48,22 @@ final class BusStopViewModel {
                     if let id = routeStop.id,
                        let index = routeStop.sequence {
                         apiService.getStop(id: id, index: index) { success, data, index, error in
-                            if success, let data, let name = data.stop?.nameTc {
-                                self.busStopRelay.accept(BusStop(index: index, name: name))
+                            if success, let data, let stop = data.stop {
+                                self.busStopRelay.accept(BusStop(index: index, routeNo: no, stop: stop))
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    func getEta(index: Int, stopID: String, routeNo: String) {
+        apiService.getEta(stopID: stopID, routeNo: routeNo) { [weak self] success, data, error in
+            guard let self else { return }
+            if success, let data, let etas = data.etas {
+                self.busStops[index].etas = etas.map { $0.time?.hhmm() ?? "" }
+                self.reloadRowRelay.accept(IndexPath(row: 1, section: index))
             }
         }
     }
