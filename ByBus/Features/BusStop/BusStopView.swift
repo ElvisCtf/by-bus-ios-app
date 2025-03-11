@@ -15,12 +15,10 @@ final class BusStopView: UIView {
     
     private let route: Route
     private let viewModel: BusStopViewModel
-    private var direction: Direction = .outbound
     private let disposeBag = DisposeBag()
     
     private let originDestinView = SwapperView()
     private let separator = UIView.plain(bgColor: .separator)
-    let backBtn = UIButton.icon(id: UI.backBtn.id, imgName: "chevron.left", bgColor: .clear, imgColor: .systemBlue)
     
     private lazy var tableView: UITableView = {
         var tv = UITableView.plain(id: UI.tableView.id)
@@ -47,21 +45,13 @@ final class BusStopView: UIView {
     }
     
     private func setLayout() {
-        addSubview(backBtn)
         addSubview(originDestinView)
         addSubview(separator)
         addSubview(tableView)
         
-        backBtn.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(16)
-            $0.centerY.equalTo(originDestinView.snp.centerY)
-            $0.size.equalTo(24)
-        }
-        
         originDestinView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.left.equalTo(backBtn.snp.right).offset(16)
-            $0.right.equalToSuperview().inset(16)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(8)
+            $0.left.right.equalToSuperview().inset(16)
         }
         
         separator.snp.makeConstraints {
@@ -93,7 +83,7 @@ final class BusStopView: UIView {
         originDestinView.swapBtn.rx.tap.asSignal()
             .emit(onNext: { [weak self] in
                 guard let self else { return }
-                self.direction = self.direction.toggle
+                self.viewModel.toggleDirection()
                 self.originDestinView.swap()
                 self.getBusStops()
         }).disposed(by: disposeBag)
@@ -101,7 +91,7 @@ final class BusStopView: UIView {
     
     private func getBusStops() {
         if let routeNo = route.routeNo {
-            viewModel.getBusStops(no: routeNo, direction: direction)
+            viewModel.getBusStops(no: routeNo)
         }
     }
     

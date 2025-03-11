@@ -13,6 +13,7 @@ final class BusStopViewModel {
     let reloadDataRelay = PublishRelay<Void>()
     let reloadRowRelay = PublishRelay<IndexPath>()
     var busStops = [BusStop]()
+    var direction: Direction = .outbound
     
     private let busStopRelay = PublishRelay<BusStop>()
     private var busStopsCount = 0
@@ -38,7 +39,7 @@ final class BusStopViewModel {
             }).disposed(by: disposeBag)
     }
     
-    func getBusStops(no: String, direction: Direction) {
+    func getBusStops(no: String) {
         busStops = []
         apiService.getRouteStops(no: no, direction: direction.value) { [weak self] success, data, error in
             guard let self else { return }
@@ -66,5 +67,17 @@ final class BusStopViewModel {
                 self.reloadRowRelay.accept(IndexPath(row: 1, section: index))
             }
         }
+    }
+    
+    func saveStop(isSelected: Bool, direction: Direction, busStop: BusStop) {
+        if isSelected {
+            // save stop
+        } else {
+            // remove stop
+        }
+    }
+    
+    func toggleDirection() {
+        direction = direction.toggle
     }
 }
