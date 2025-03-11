@@ -16,13 +16,11 @@ class BusStopViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     init(route: Route) {
@@ -32,17 +30,12 @@ class BusStopViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = route.routeNo
         setUI()
     }
     
     private func setUI() {
         view = busStopView
-        navigationItem.hidesBackButton = true
-        busStopView.backBtn.addTarget(self, action: #selector(onBack), for: .touchUpInside)
-    }
-    
-    @objc private func onBack() {
-        navigationController?.popViewController(animated: true)
     }
     
     required init?(coder: NSCoder) {
