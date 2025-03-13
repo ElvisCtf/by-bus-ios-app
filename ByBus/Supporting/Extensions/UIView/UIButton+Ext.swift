@@ -32,4 +32,18 @@ extension UIButton {
         btn.addAccessibilityID(id)
         return btn
     }
+    
+    static func selected(id: String = "", normalImg: String, selectedImg: String, color: UIColor? = nil) -> UIButton {
+        let btn = UIButton()
+        btn.imageView?.contentMode = .scaleAspectFit
+        btn.setImage(UIImage(systemName: normalImg), for: .normal)
+        btn.setImage(UIImage(systemName: selectedImg), for: .selected)
+        btn.contentVerticalAlignment = .fill
+        btn.contentHorizontalAlignment = .fill
+        
+        if let color {
+            btn.tintColor = color
+        }
+        return btn
+    }
 }
