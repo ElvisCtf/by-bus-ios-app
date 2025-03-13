@@ -115,14 +115,20 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
         let busStop = viewModel.busStops[indexPath.section]
         
         if indexPath.row == 0 {
+            // header cell
             let cell = tableView.dequeueReusableCell(withIdentifier: SectionCellView.reuseID, for: indexPath) as! SectionCellView
             cell.setText(with: busStop)
             return cell
+        } else {
+            // expandable cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ExpandedCellView.reuseID, for: indexPath) as! ExpandedCellView
+            cell.onSelect = { [weak self] isSelected, busStop in
+                guard let self else { return }
+                self.viewModel.saveStop(isSelected, busStop.id, busStop.routeNo, route.origin, route.destination)
+            }
+            cell.setText(with: busStop)
+            return cell
         }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: ExpandedCellView.reuseID, for: indexPath) as! ExpandedCellView
-        cell.setText(with: busStop)
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
