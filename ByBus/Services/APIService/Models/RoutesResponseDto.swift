@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias TcEnSc = (String, String, String)
+
 // MARK: - RoutesResponseDto
 struct RoutesResponseDto: Codable {
     let type, version: String?
@@ -38,6 +40,14 @@ struct Route: Codable, Equatable {
         case origSc = "orig_sc"
         case destSc = "dest_sc"
         case dataTimestamp = "data_timestamp"
+    }
+    
+    var origin: TcEnSc {
+        return (origTc ?? "", origEn ?? "", origSc ?? "")
+    }
+    
+    var destination: TcEnSc {
+        return (destEn ?? "", destTc ?? "", destSc ?? "")
     }
 }
 

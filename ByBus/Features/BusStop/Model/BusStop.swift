@@ -9,7 +9,7 @@ struct BusStop {
     let index: Int
     let id: String
     let routeNo: String
-    let nameTc, nameEn, nameSc: String
+    let name: TcEnSc
     var etas: [String] = []
     var isExpanded = false
     
@@ -21,8 +21,6 @@ struct BusStop {
         self.index = index
         self.id = stop.id ?? ""
         self.routeNo = routeNo
-        self.nameTc = stop.nameTc ?? ""
-        self.nameEn = stop.nameEn ?? ""
-        self.nameSc = stop.nameSc ?? ""
+        self.name = stop.name
     }
 }
