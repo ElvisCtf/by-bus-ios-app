@@ -34,4 +34,8 @@ struct Stop: Codable {
         case lat, long
         case dataTimestamp = "data_timestamp"
     }
+    
+    var name: TcEnSc {
+        return (nameTc ?? "", nameEn ?? "", nameSc ?? "")
+    }
 }

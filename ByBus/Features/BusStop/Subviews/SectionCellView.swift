@@ -33,7 +33,7 @@ final class SectionCellView: UITableViewCell {
     }
     
     func setText(with busStop: BusStop) {
-        stopLbl.text = "\(busStop.index). \(busStop.nameTc)"
+        stopLbl.text = "\(busStop.index). \(busStop.name.0)"
     }
     
     required init?(coder: NSCoder) {
