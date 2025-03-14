@@ -12,6 +12,7 @@ struct BusStop {
     let name: TcEnSc
     var etas: [String] = []
     var isExpanded = false
+    var isSaved = false
     
     var arrivalTime: String {
         etas.joined(separator: "\n\n")
