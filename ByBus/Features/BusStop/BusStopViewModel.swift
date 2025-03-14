@@ -45,30 +45,46 @@ final class BusStopViewModel {
     
     func getBusStops(no: String) {
         busStops = []
-        apiService.getRouteStops(no: no, direction: direction.value) { [weak self] success, data, error in
+        apiService.getRouteStops(no: no, direction: direction.value) { [weak self] result in
             guard let self else { return }
-            if success, let data, let routeStops = data.routeStops {
+            
+            switch result {
+            case .success(let data):
+                let routeStops = data.routeStops ?? []
                 self.busStopsCount = routeStops.count
                 for routeStop in routeStops {
                     if let id = routeStop.id,
                        let index = routeStop.sequence {
-                        apiService.getStop(id: id, index: index) { success, data, index, error in
-                            if success, let data, let stop = data.stop {
-                                self.busStopRelay.accept(BusStop(index: index, routeNo: no, stop: stop))
+                        apiService.getStop(id: id, index: index) { result in
+                            switch result {
+                            case .success(let data):
+                                if let stop = data.0.stop {
+                                    self.busStopRelay.accept(BusStop(index: index, routeNo: no, stop: stop))
+                                }
+                            case .failure(_):
+                                ()
                             }
                         }
                     }
                 }
+            case .failure(_):
+                ()
             }
         }
     }
     
     func getEta(index: Int, stopID: String, routeNo: String) {
-        apiService.getEta(stopID: stopID, routeNo: routeNo) { [weak self] success, data, error in
+        apiService.getEta(stopID: stopID, routeNo: routeNo) { [weak self] result in
             guard let self else { return }
-            if success, let data, let etas = data.etas {
-                self.busStops[index].etas = etas.map { $0.time?.hhmm() ?? "" }
-                self.reloadRowRelay.accept(IndexPath(row: 1, section: index))
+            
+            switch result {
+            case .success(let data):
+                if let etas = data.etas {
+                    self.busStops[index].etas = etas.map { $0.time?.hhmm() ?? "" }
+                    self.reloadRowRelay.accept(IndexPath(row: 1, section: index))
+                }
+            case .failure(_):
+                ()
             }
         }
     }
