@@ -7,8 +7,6 @@
 
 import Foundation
 
-typealias TcEnSc = (String, String, String)
-
 // MARK: - RoutesResponseDto
 struct RoutesResponseDto: Codable {
     let type, version: String?
@@ -26,8 +24,8 @@ struct RoutesResponseDto: Codable {
 struct Route: Codable, Equatable {
     let company: Company?
     let routeNo: String?
-    let origTc, origEn, origSc: String?
-    let destTc, destEn, destSc: String?
+    var origTc, origEn, origSc: String?
+    var destTc, destEn, destSc: String?
     let dataTimestamp: Date?
 
     enum CodingKeys: String, CodingKey {
@@ -43,11 +41,17 @@ struct Route: Codable, Equatable {
     }
     
     var origin: TcEnSc {
-        return (origTc ?? "", origEn ?? "", origSc ?? "")
+        return TcEnSc(tc: origTc ?? "", en: origEn ?? "", sc: origSc ?? "")
     }
     
     var destination: TcEnSc {
-        return (destEn ?? "", destTc ?? "", destSc ?? "")
+        return TcEnSc(tc: destTc ?? "", en: destEn ?? "", sc: destSc ?? "")
+    }
+    
+    mutating func switchDirection() {
+        let temp = origin
+        (origTc, origEn, origSc) = (destTc, destEn, destSc)
+        (destTc, destEn, destSc) = (temp.tc, temp.en, temp.sc)
     }
 }
 
@@ -68,4 +72,10 @@ enum Company: String, Codable {
             return "Citybus"
         }
     }
+}
+
+struct TcEnSc: Codable, Equatable {
+    let tc: String
+    let en: String
+    let sc: String
 }
