@@ -36,6 +36,6 @@ struct Stop: Codable {
     }
     
     var name: TcEnSc {
-        return (nameTc ?? "", nameEn ?? "", nameSc ?? "")
+        return TcEnSc(tc: nameTc ?? "", en: nameEn ?? "", sc: nameSc ?? "")
     }
 }

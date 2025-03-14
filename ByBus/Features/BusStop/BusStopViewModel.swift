@@ -17,11 +17,15 @@ final class BusStopViewModel {
     
     private let busStopRelay = PublishRelay<BusStop>()
     private var busStopsCount = 0
+    
     private let apiService: APIServiceProtocol
+    private let dbService: DatabaseServiceProtocol
+    
     private let disposeBag = DisposeBag()
     
-    init(apiService: APIServiceProtocol = APIService()) {
+    init(apiService: APIServiceProtocol = APIService(), dbService: DatabaseServiceProtocol = DatabaseService.shared) {
         self.apiService = apiService
+        self.dbService = dbService
         setBinding()
     }
     
@@ -69,15 +73,27 @@ final class BusStopViewModel {
         }
     }
     
-    func saveStop(isSelected: Bool, direction: Direction, busStop: BusStop) {
-        if isSelected {
-            // save stop
-        } else {
-            // remove stop
+    func saveBookmark(id stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) {
+        dbService.checkBusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let bookmark):
+                if let bookmark {
+                    self.deleteBookmark(bookmark)
+                } else {
+                    self.dbService.saveBusStopBookmark(BusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination))
+                }
+            case .failure(_):
+                ()
+            }
         }
     }
     
-    func toggleDirection() {
+    func deleteBookmark(_ bookmark: BusStopBookmark) {
+        dbService.deleteBusStopBookmark(bookmark)
+    }
+    
+    func switchDirection() {
         direction = direction.toggle
     }
 }

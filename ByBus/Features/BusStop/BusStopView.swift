@@ -13,7 +13,7 @@ import RxCocoa
 final class BusStopView: UIView {
     static let name = "BusStopView"
     
-    private let route: Route
+    private var route: Route
     private let viewModel: BusStopViewModel
     private let disposeBag = DisposeBag()
     
@@ -41,7 +41,7 @@ final class BusStopView: UIView {
     
     private func setUI() {
         backgroundColor = .systemBackground
-        originDestinView.setText(origin: route.origTc, destin: route.destTc)
+        originDestinView.setText(origin: route.origin.tc, destin: route.destination.tc)
     }
     
     private func setLayout() {
@@ -83,7 +83,7 @@ final class BusStopView: UIView {
         originDestinView.swapBtn.rx.tap.asSignal()
             .emit(onNext: { [weak self] in
                 guard let self else { return }
-                self.viewModel.toggleDirection()
+                self.switchDirection()
                 self.originDestinView.swap()
                 self.getBusStops()
         }).disposed(by: disposeBag)
@@ -93,6 +93,11 @@ final class BusStopView: UIView {
         if let routeNo = route.routeNo {
             viewModel.getBusStops(no: routeNo)
         }
+    }
+    
+    private func switchDirection() {
+        route.switchDirection()
+        viewModel.switchDirection()
     }
     
     required init?(coder: NSCoder) {
@@ -124,7 +129,7 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: ExpandedCellView.reuseID, for: indexPath) as! ExpandedCellView
             cell.onSelect = { [weak self] isSelected, busStop in
                 guard let self else { return }
-                self.viewModel.saveStop(isSelected, busStop.id, busStop.routeNo, route.origin, route.destination)
+                self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, origin: route.origin, destination: route.destination)
             }
             cell.setText(with: busStop)
             return cell
