@@ -36,20 +36,17 @@ final class RoutesViewModel {
         self.reloadDataRelay.accept(())
     }
     
-    func getRoutes() {
-        apiService.getRoutes { [weak self] result in
-            guard let self else { return }
-            
-            switch result {
-            case .success(let data):
-                if let fetchedRoutes = data.routes {
-                    self.routes = fetchedRoutes
-                    self.displayRoutes = fetchedRoutes
-                    self.reloadDataRelay.accept(())
-                }
-            case .failure(_):
-                ()
+    func getRoutes() async {
+        let result = await apiService.getRoutes()
+        switch result {
+        case .success(let data):
+            if let fetchedRoutes = data.routes {
+                self.routes = fetchedRoutes
+                self.displayRoutes = fetchedRoutes
+                self.reloadDataRelay.accept(())
             }
+        case .failure(_):
+            ()
         }
     }
 }

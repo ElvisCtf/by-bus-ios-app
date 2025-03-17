@@ -8,14 +8,14 @@
 import Foundation
 
 extension Data {
-    func decode<T: Decodable>(as type: T.Type) -> Result<T, Error> {
+    func decode<T: Decodable>(as type: T.Type) -> T? {
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
             let decodedObject = try decoder.decode(T.self, from: self)
-            return .success(decodedObject)
-        } catch let decodingError {
-            return .failure(decodingError)
+            return decodedObject
+        } catch {
+            return nil
         }
     }
 }

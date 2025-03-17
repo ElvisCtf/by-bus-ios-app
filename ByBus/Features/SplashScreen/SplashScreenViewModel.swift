@@ -17,17 +17,15 @@ final class SplashScreenViewModel {
         self.apiService = apiServie
     }
     
-    func getRoutes() {
-        apiService.getRoutes { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let data):
-                if let fetchedRoutes = data.routes {
-                    routesRelay.accept(fetchedRoutes)
-                }
-            case .failure(_):
-                ()
+    func getRoutes() async {
+        let result = await apiService.getRoutes()
+        switch result {
+        case .success(let data):
+            if let fetchedRoutes = data.routes {
+                routesRelay.accept(fetchedRoutes)
             }
+        case .failure:
+            ()
         }
     }
 }

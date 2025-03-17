@@ -9,50 +9,33 @@ import Foundation
 import RxSwift
 
 protocol APIServiceProtocol: AnyObject {
-    func getRoutes(completion: @escaping (Result<RoutesResponseDto, Error>) -> Void)
-    func getRouteStops(no: String, direction: String, completion: @escaping (Result<RouteStopsResponseDto, Error>) -> Void)
-    func getStop(id: String, index: Int, completion: @escaping (Result<(StopResponseDto, Int), Error>) -> Void)
-    func getEta(stopID: String, routeNo: String, completion: @escaping (Result<EtaResponseDto, Error>) -> Void)
+    func getRoutes() async -> Result<RoutesResponseDto, Error>
+    func getRouteStops(no: String, direction: String) async -> Result<RouteStopsResponseDto, Error>
+    func getStop(id: String, index: Int) async -> Result<StopResponseDto, Error>
+    func getEta(stopID: String, routeNo: String) async -> Result<EtaResponseDto, Error>
 }
 
 final class APIService: APIServiceProtocol {
     private let disposeBag = DisposeBag()
     
-    func getRoutes(completion: @escaping (Result<RoutesResponseDto, Error>) -> Void) {
+    func getRoutes() async -> Result<RoutesResponseDto, Error> {
         let request = APIRequest().make(with: Endpoints.routes)
-        sendRequest(with: request, as: RoutesResponseDto.self, completion: completion)
+        return await NetworkManager.shared.asyncSend(with: request, as: RoutesResponseDto.self)
     }
     
-    func getRouteStops(no: String, direction: String, completion: @escaping (Result<RouteStopsResponseDto, Error>) -> Void) {
+    func getRouteStops(no: String, direction: String) async -> Result<RouteStopsResponseDto, Error> {
         let request = APIRequest(path: "\(no)/\(direction)").make(with: Endpoints.routeStops)
-        sendRequest(with: request, as: RouteStopsResponseDto.self, completion: completion)
+        return await NetworkManager.shared.asyncSend(with: request, as: RouteStopsResponseDto.self)
     }
     
-    func getStop(id: String, index: Int, completion: @escaping (Result<(StopResponseDto, Int), Error>) -> Void) {
+    func getStop(id: String, index: Int) async -> Result<StopResponseDto, Error> {
         let request = APIRequest(path: id).make(with: Endpoints.stop)
-        NetworkManager.shared
-            .send(with: request, as: StopResponseDto.self)
-            .subscribe(onSuccess: { data in
-                completion(.success((data, index)))
-            },onFailure: { error in
-                completion(.failure(error))
-            })
-            .disposed(by: disposeBag)
+        return await NetworkManager.shared.asyncSend(with: request, as: StopResponseDto.self)
     }
     
-    func getEta(stopID: String, routeNo: String, completion: @escaping (Result<EtaResponseDto, Error>) -> Void) {
+    func getEta(stopID: String, routeNo: String) async -> Result<EtaResponseDto, Error> {
         let request = APIRequest(path: "\(stopID)/\(routeNo)").make(with: Endpoints.estimatedTimeOfArrival)
-        sendRequest(with: request, as: EtaResponseDto.self, completion: completion)
+        return await NetworkManager.shared.asyncSend(with: request, as: EtaResponseDto.self)
     }
-    
-    private func sendRequest<T: Codable>(with request: URLRequest, as type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        NetworkManager.shared
-            .send(with: request, as: type.self)
-            .subscribe(onSuccess: { data in
-                completion(.success(data))
-            },onFailure: { error in
-                completion(.failure(error))
-            })
-            .disposed(by: disposeBag)
-    }
+
 }

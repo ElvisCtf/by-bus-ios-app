@@ -16,19 +16,17 @@ final class NetworkManager {
         self.session = URLSession(configuration: .default)
     }
     
-    func send<T: Decodable>(with request: URLRequest, as type: T.Type) -> Single<T> {
-        return Single<T>.create { observer in
-            let task = self.session.dataTask(with: request) { data, response, error in
-                if let error {
-                    observer(.failure(error))
-                } else if let data {
-                    observer(data.decode(as: T.self))
-                } else {
-                    observer(.failure(NSError(domain: "No data", code: -1, userInfo: nil)))
-                }
+    func asyncSend<T: Decodable>(with request: URLRequest, as type: T.Type) async -> Result<T, Error> {
+        do {
+            let (data, _) = try await session.data(for: request)
+            if let data = data.decode(as: T.self) {
+                return .success(data)
+            } else {
+                return .failure(NSError(domain: "Nil data", code: -1, userInfo: nil))
             }
-            task.resume()
-            return Disposables.create { task.cancel() }
+        } catch {
+            return .failure(error)
         }
+        
     }
 }

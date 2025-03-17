@@ -90,8 +90,10 @@ final class BusStopView: UIView {
     }
     
     private func getBusStops() {
-        if let routeNo = route.routeNo {
-            viewModel.getBusStops(no: routeNo)
+        Task {
+            if let routeNo = route.routeNo {
+                await viewModel.getBusStops(no: routeNo)
+            }
         }
     }
     
@@ -142,7 +144,9 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
             viewModel.busStops[indexPath.section].isExpanded.toggle()
             let busStop = viewModel.busStops[indexPath.section]
             if busStop.isExpanded {
-                viewModel.getEta(index: indexPath.section, stopID: busStop.id, routeNo: busStop.routeNo)
+                Task {
+                    await viewModel.getEta(index: indexPath.section, stopID: busStop.id, routeNo: busStop.routeNo)
+                }
             } else {
                 tableView.reloadRows(at: [childIndexPath], with: .automatic)
             }

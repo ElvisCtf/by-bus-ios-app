@@ -18,7 +18,10 @@ final class SplashScreen: UIViewController {
         super.viewDidLoad()
         setUI()
         setBinding()
-        viewModel.getRoutes()
+        
+        Task {
+            await viewModel.getRoutes()
+        }
     }
     
     private func setUI() {
