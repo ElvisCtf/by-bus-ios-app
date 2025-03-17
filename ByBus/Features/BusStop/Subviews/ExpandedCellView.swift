@@ -39,7 +39,7 @@ final class ExpandedCellView: UITableViewCell {
         contentView.addSubview(bookmarkBtn)
         
         arrivalTimeLbl.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(8).priority(.high)
+            $0.top.bottom.equalToSuperview()
             $0.left.equalToSuperview().inset(16)
         }
         
