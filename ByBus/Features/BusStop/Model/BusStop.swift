@@ -15,7 +15,7 @@ struct BusStop {
     var isSaved = false
     
     var arrivalTime: String {
-        etas.joined(separator: "\n\n")
+        "\n\(etas.joined(separator: "\n\n"))\n"
     }
     
     init(index: Int, routeNo: String, stop: Stop) {
