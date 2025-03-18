@@ -12,16 +12,17 @@ struct BusStop {
     let name: TcEnSc
     var etas: [String] = []
     var isExpanded = false
-    var isSaved = false
+    var isSaved: Bool
     
     var arrivalTime: String {
         "\n\(etas.joined(separator: "\n\n"))\n"
     }
     
-    init(index: Int, routeNo: String, stop: Stop) {
+    init(index: Int, routeNo: String, stop: Stop, isSaved: Bool = false) {
         self.index = index
         self.id = stop.id ?? ""
         self.routeNo = routeNo
         self.name = stop.name
+        self.isSaved = isSaved
     }
 }
