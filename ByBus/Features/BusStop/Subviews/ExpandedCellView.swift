@@ -72,6 +72,17 @@ final class ExpandedCellView: UITableViewCell {
         }
     }
     
+    func setText(_ text: String, isExpanded: Bool) {
+        arrivalTimeLbl.text = text
+        bookmarkBtn.isSelected = true
+        
+        if text != "" && isExpanded {
+            bookmarkBtn.isHidden = false
+        } else {
+            bookmarkBtn.isHidden = true
+        }
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -8,6 +8,14 @@
 import UIKit
 
 class BookmarkViewController: UIViewController {
+    private let viewModel = BookmarkViewModel()
+    private lazy var bookmarkView = BookmarkView(with: viewModel)
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.getBookmarks()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -15,5 +23,6 @@ class BookmarkViewController: UIViewController {
     
     func setUI() {
         title = "收藏"
+        view = bookmarkView
     }
 }
