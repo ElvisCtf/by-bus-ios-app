@@ -10,14 +10,13 @@ import Foundation
 
 @Model
 final class BusStopBookmark {
-    @Attribute(.unique) var id: String
+    @Attribute(.unique) var id: UUID = UUID()
     var stopID: String
     var routeNo: String
     var origin: TcEnSc
     var destination: TcEnSc
     
-    init(id: String = UUID().uuidString, stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) {
-        self.id = id
+    init(stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) {
         self.stopID = stopID
         self.routeNo = routeNo
         self.origin = origin
