@@ -46,21 +46,31 @@ extension BusStopViewModel {
     }
     
     private func getBusStopDetails(with routeStops: [RouteStop], routeNo: String) async -> [BusStop] {
-        var fetchedBusStops = [BusStop]()
-        for routeStop in routeStops {
-            if let id = routeStop.id, let index = routeStop.sequence {
-                switch await apiService.getStop(id: id, index: index) {
+        return await withTaskGroup(of: (Int, Result<StopResponseDto, Error>).self, returning: [BusStop].self) { taskGroup in
+            var fetchedBusStops: [BusStop] = []
+            
+            for routeStop in routeStops {
+                if let id = routeStop.id, let index = routeStop.sequence {
+                    taskGroup.addTask {
+                        await self.apiService.getStop(id: id, index: index)
+                    }
+                }
+            }
+            
+            for await result in taskGroup {
+                let (index, dto) = result
+                switch dto {
                 case .success(let data):
-                    if let stop = data.stop, let index = routeStop.sequence {
+                    if let stop = data.stop {
                         fetchedBusStops.append(BusStop(index: index, routeNo: routeNo, stop: stop))
                     }
                 case .failure(_):
                     ()
                 }
             }
+            fetchedBusStops.sort { $0.index < $1.index }
+            return fetchedBusStops
         }
-        
-        return fetchedBusStops
     }
     
     func getEta(index: Int, stopID: String, routeNo: String) async {
