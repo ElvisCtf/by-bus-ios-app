@@ -1,5 +1,5 @@
 //
-//  BookmarkViewModel.swift
+//  BookmarksViewModel.swift
 //  ByBus
 //
 //  Created by Elvis Cheng on 17/3/2025.
@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import Foundation
 
-final class BookmarkViewModel {
+final class BookmarksViewModel {
     let reloadDataRelay = PublishRelay<Void>()
     let reloadRowRelay = PublishRelay<IndexPath>()
     

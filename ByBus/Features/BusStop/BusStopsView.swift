@@ -1,5 +1,5 @@
 //
-//  BusStopView.swift
+//  BusStopsView.swift
 //  ByBus
 //
 //  Created by Elvis Cheng on 18/2/2025.
@@ -10,11 +10,11 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class BusStopView: UIView {
-    static let name = "BusStopView"
+final class BusStopsView: UIView {
+    static let name = "BusStopsView"
     
     private var route: Route
-    private let viewModel: BusStopViewModel
+    private let viewModel: BusStopsViewModel
     private let disposeBag = DisposeBag()
     
     private let originDestinView = SwapperView()
@@ -29,7 +29,7 @@ final class BusStopView: UIView {
         return tv
     }()
     
-    init(with route: Route, and viewModel: BusStopViewModel) {
+    init(with route: Route, and viewModel: BusStopsViewModel) {
         self.route = route
         self.viewModel = viewModel
         super.init(frame: .zero)
@@ -109,7 +109,7 @@ final class BusStopView: UIView {
 
 
 // MARK: - Table View Delegate
-extension BusStopView: UITableViewDelegate, UITableViewDataSource {
+extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.busStops.count
     }
@@ -166,7 +166,7 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
 
 
 // MARK: - Accessibility Identifier
-extension BusStopView {
+extension BusStopsView {
     enum UI: String {
         case tableView = "tableView"
         case backBtn   = "backButton"

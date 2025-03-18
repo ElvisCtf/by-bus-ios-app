@@ -87,7 +87,7 @@ extension RoutesView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let busStopVC = BusStopViewController(route: viewModel.displayRoutes[indexPath.row])
+        let busStopVC = BusStopsViewController(route: viewModel.displayRoutes[indexPath.row])
         parentVC?.navigationController?.pushViewController(busStopVC, animated: true)
     }
 }

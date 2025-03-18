@@ -1,5 +1,5 @@
 //
-//  BusStopViewModel.swift
+//  BusStopsViewModel.swift
 //  ByBus
 //
 //  Created by Elvis Cheng on 7/3/2025.
@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import Foundation
 
-final class BusStopViewModel {
+final class BusStopsViewModel {
     let reloadDataRelay = PublishRelay<Void>()
     let reloadRowRelay = PublishRelay<IndexPath>()
     var busStops = [BusStop]()
@@ -32,7 +32,7 @@ final class BusStopViewModel {
 
 
 // MARK: - API
-extension BusStopViewModel {
+extension BusStopsViewModel {
     func getBusStops(no: String) async {
         busStops = []
         switch await apiService.getRouteStops(no: no, direction: direction.value) {
@@ -89,7 +89,7 @@ extension BusStopViewModel {
 
 
 // MARK: - Database
-extension BusStopViewModel {
+extension BusStopsViewModel {
     func saveBookmark(id stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) async {
         let result = await dbService.checkBusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination)
         switch result {

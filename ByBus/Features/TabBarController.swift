@@ -21,7 +21,7 @@ final class TabBarController: UITabBarController {
         title: "Bookmark",
         defaultImage: "bookmark",
         selectedImage: "bookmark.fill",
-        viewController: BookmarkViewController()
+        viewController: BookmarksViewController()
     )
     
     private lazy var settingTab = UINavigationController(
