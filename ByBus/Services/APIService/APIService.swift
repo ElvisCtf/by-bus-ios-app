@@ -11,7 +11,7 @@ import RxSwift
 protocol APIServiceProtocol: AnyObject {
     func getRoutes() async -> Result<RoutesResponseDto, Error>
     func getRouteStops(no: String, direction: String) async -> Result<RouteStopsResponseDto, Error>
-    func getStop(id: String, index: Int) async -> Result<StopResponseDto, Error>
+    func getStop(id: String, index: Int) async -> (Int, Result<StopResponseDto, Error>)
     func getEta(stopID: String, routeNo: String) async -> Result<EtaResponseDto, Error>
 }
 
@@ -28,9 +28,9 @@ final class APIService: APIServiceProtocol {
         return await NetworkManager.shared.asyncSend(with: request, as: RouteStopsResponseDto.self)
     }
     
-    func getStop(id: String, index: Int) async -> Result<StopResponseDto, Error> {
+    func getStop(id: String, index: Int) async -> (Int, Result<StopResponseDto, Error>) {
         let request = APIRequest(path: id).make(with: Endpoints.stop)
-        return await NetworkManager.shared.asyncSend(with: request, as: StopResponseDto.self)
+        return (index, await NetworkManager.shared.asyncSend(with: request, as: StopResponseDto.self))
     }
     
     func getEta(stopID: String, routeNo: String) async -> Result<EtaResponseDto, Error> {
