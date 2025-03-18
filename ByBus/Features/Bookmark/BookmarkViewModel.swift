@@ -30,16 +30,14 @@ final class BookmarkViewModel {
         self.dbService = dbService
     }
     
-    func getBookmarks() {
-        dbService.getBusStopBookmarks { [weak self] result in
-            guard let self else { return }
-            switch result {
+    func getBookmarks() async {
+        let result = await dbService.getBusStopBookmarks()
+        switch  result {
             case .success(let bookmarks):
                 self.bookmarks = bookmarks
                 self.reloadDataRelay.accept(())
             case .failure(_):
                 ()
-            }
         }
     }
     

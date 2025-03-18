@@ -131,7 +131,9 @@ extension BusStopView: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: ExpandedCellView.reuseID, for: indexPath) as! ExpandedCellView
             cell.onSelect = { [weak self] isSelected, busStop in
                 guard let self else { return }
-                self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, origin: route.origin, destination: route.destination)
+                Task {
+                    await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, origin: self.route.origin, destination: self.route.destination)
+                }
             }
             cell.setText(with: busStop)
             return cell

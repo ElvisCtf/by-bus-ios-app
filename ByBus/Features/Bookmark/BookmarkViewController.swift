@@ -13,7 +13,9 @@ class BookmarkViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.getBookmarks()
+        Task {
+            await viewModel.getBookmarks()
+        }
     }
     
     override func viewDidLoad() {
