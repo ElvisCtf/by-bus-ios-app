@@ -83,6 +83,15 @@ final class RouteCellView: UITableViewCell {
         toLbl.text      = "往"
     }
     
+    func setText(with bookmark: BusStopBookmark) {
+        companyLbl.text = Company.ctb.zhName
+        routeNoLbl.text = bookmark.routeNo
+        destinLbl.text  = bookmark.origin.tc
+        originLbl.text  = bookmark.destination.tc
+        fromLbl.text    = "由"
+        toLbl.text      = "往"
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
