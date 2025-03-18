@@ -1,5 +1,5 @@
 //
-//  BusStopViewController.swift
+//  BusStopsViewController.swift
 //  ByBus
 //
 //  Created by Elvis Cheng on 18/2/2025.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class BusStopViewController: UIViewController {
-    private lazy var busStopView = BusStopView(with: route, and: viewModel)
-    private let viewModel = BusStopViewModel()
+class BusStopsViewController: UIViewController {
+    private lazy var busStopView = BusStopsView(with: route, and: viewModel)
+    private let viewModel = BusStopsViewModel()
     
     private var route: Route
     

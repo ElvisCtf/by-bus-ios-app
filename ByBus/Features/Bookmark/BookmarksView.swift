@@ -1,5 +1,5 @@
 //
-//  BookmarkView.swift
+//  BookmarksView.swift
 //  ByBus
 //
 //  Created by Elvis Cheng on 17/3/2025.
@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import RxSwift
 
-final class BookmarkView: UIView {
+final class BookmarksView: UIView {
     static let name = "BookmarkView"
-    private let viewModel: BookmarkViewModel
+    private let viewModel: BookmarksViewModel
     private let disposeBag = DisposeBag()
     
     private lazy var tableView: UITableView = {
@@ -23,7 +23,7 @@ final class BookmarkView: UIView {
         return tv
     }()
     
-    init(with viewModel: BookmarkViewModel) {
+    init(with viewModel: BookmarksViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
@@ -65,7 +65,7 @@ final class BookmarkView: UIView {
 
 
 // MARK: - Table View Delegate
-extension BookmarkView: UITableViewDelegate, UITableViewDataSource {
+extension BookmarksView: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.bookmarks.count
     }
