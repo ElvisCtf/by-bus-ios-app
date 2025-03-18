@@ -64,6 +64,7 @@ final class ExpandedCellView: UITableViewCell {
     func setText(with busStop: BusStop) {
         self.busStop = busStop
         arrivalTimeLbl.text = busStop.arrivalTime
+        bookmarkBtn.isSelected = busStop.isSaved
         
         if busStop.arrivalTime != "" && busStop.isExpanded {
             bookmarkBtn.isHidden = false

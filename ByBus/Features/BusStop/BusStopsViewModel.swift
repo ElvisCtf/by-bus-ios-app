@@ -12,6 +12,8 @@ import Foundation
 final class BusStopsViewModel {
     let reloadDataRelay = PublishRelay<Void>()
     let reloadRowRelay = PublishRelay<IndexPath>()
+    
+    var route: Route
     var busStops = [BusStop]()
     var direction: Direction = .outbound
     
@@ -20,12 +22,14 @@ final class BusStopsViewModel {
     
     private let disposeBag = DisposeBag()
     
-    init(apiService: APIServiceProtocol = APIService(), dbService: DatabaseServiceProtocol = DatabaseService.shared) {
+    init(apiService: APIServiceProtocol = APIService(), dbService: DatabaseServiceProtocol = DatabaseService.shared, with route: Route) {
         self.apiService = apiService
         self.dbService = dbService
+        self.route = route
     }
     
     func switchDirection() {
+        route.switchDirection()
         direction = direction.toggle
     }
 }
@@ -62,7 +66,8 @@ extension BusStopsViewModel {
                 switch dto {
                 case .success(let data):
                     if let stop = data.stop {
-                        fetchedBusStops.append(BusStop(index: index, routeNo: routeNo, stop: stop))
+                        let isSaved = await checkSaved(id: stop.id ?? "", routeNo: routeNo, origin: route.origin, destination: route.destination)
+                        fetchedBusStops.append(BusStop(index: index, routeNo: routeNo, stop: stop, isSaved: isSaved))
                     }
                 case .failure(_):
                     ()
@@ -90,6 +95,16 @@ extension BusStopsViewModel {
 
 // MARK: - Database
 extension BusStopsViewModel {
+    func checkSaved(id stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) async -> Bool {
+        let result = await dbService.checkBusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination)
+        switch result {
+        case .success(let bookmark):
+            return bookmark != nil
+        case .failure(_):
+            return false
+        }
+    }
+    
     func saveBookmark(id stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) async {
         let result = await dbService.checkBusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination)
         switch result {

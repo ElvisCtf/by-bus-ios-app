@@ -13,7 +13,6 @@ import RxCocoa
 final class BusStopsView: UIView {
     static let name = "BusStopsView"
     
-    private var route: Route
     private let viewModel: BusStopsViewModel
     private let disposeBag = DisposeBag()
     
@@ -29,8 +28,7 @@ final class BusStopsView: UIView {
         return tv
     }()
     
-    init(with route: Route, and viewModel: BusStopsViewModel) {
-        self.route = route
+    init(with viewModel: BusStopsViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
@@ -41,7 +39,7 @@ final class BusStopsView: UIView {
     
     private func setUI() {
         backgroundColor = .systemBackground
-        originDestinView.setText(origin: route.origin.tc, destin: route.destination.tc)
+        originDestinView.setText(origin: viewModel.route.origin.tc, destin: viewModel.route.destination.tc)
     }
     
     private func setLayout() {
@@ -91,14 +89,13 @@ final class BusStopsView: UIView {
     
     private func getBusStops() {
         Task {
-            if let routeNo = route.routeNo {
+            if let routeNo = viewModel.route.routeNo {
                 await viewModel.getBusStops(no: routeNo)
             }
         }
     }
     
     private func switchDirection() {
-        route.switchDirection()
         viewModel.switchDirection()
     }
     
@@ -132,7 +129,9 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
             cell.onSelect = { [weak self] isSelected, busStop in
                 guard let self else { return }
                 Task {
-                    await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, origin: self.route.origin, destination: self.route.destination)
+                    let origin = self.viewModel.route.origin
+                    let destination = self.viewModel.route.destination
+                    await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, origin: origin, destination: destination)
                 }
             }
             cell.setText(with: busStop)

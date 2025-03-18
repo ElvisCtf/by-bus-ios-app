@@ -8,8 +8,8 @@
 import UIKit
 
 class BusStopsViewController: UIViewController {
-    private lazy var busStopView = BusStopsView(with: route, and: viewModel)
-    private let viewModel = BusStopsViewModel()
+    private lazy var busStopView = BusStopsView(with: viewModel)
+    private lazy var viewModel = BusStopsViewModel(with: route)
     
     private var route: Route
     
