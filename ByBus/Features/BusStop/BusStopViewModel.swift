@@ -80,19 +80,17 @@ extension BusStopViewModel {
 
 // MARK: - Database
 extension BusStopViewModel {
-    func saveBookmark(id stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) {
-        dbService.checkBusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let bookmark):
-                if let bookmark {
-                    self.deleteBookmark(bookmark)
-                } else {
-                    self.dbService.saveBusStopBookmark(BusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination))
-                }
-            case .failure(_):
-                ()
+    func saveBookmark(id stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) async {
+        let result = await dbService.checkBusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination)
+        switch result {
+        case .success(let bookmark):
+            if let bookmark {
+                self.deleteBookmark(bookmark)
+            } else {
+                self.dbService.saveBusStopBookmark(BusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination))
             }
+        case .failure(_):
+            ()
         }
     }
     

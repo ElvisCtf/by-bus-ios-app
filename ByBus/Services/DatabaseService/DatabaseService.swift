@@ -11,8 +11,8 @@ import SwiftData
 protocol DatabaseServiceProtocol: AnyObject {
     func saveBusStopBookmark(_ bookmark: BusStopBookmark)
     func deleteBusStopBookmark(_ bookmark: BusStopBookmark)
-    func checkBusStopBookmark(stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc, completion: @escaping (Result<BusStopBookmark?, Error>) -> Void)
-    func getBusStopBookmarks(completion: @escaping (Result<[BusStopBookmark], Error>) -> Void)
+    func checkBusStopBookmark(stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) async -> Result<BusStopBookmark?, Error>
+    func getBusStopBookmarks() async -> Result<[BusStopBookmark], Error>
 }
 
 final class DatabaseService: DatabaseServiceProtocol {
@@ -43,7 +43,7 @@ final class DatabaseService: DatabaseServiceProtocol {
         }
     }
     
-    func checkBusStopBookmark(stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc, completion: @escaping (Result<BusStopBookmark?, Error>) -> Void) {
+    func checkBusStopBookmark(stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) async -> Result<BusStopBookmark?, Error> {
         let descriptor = FetchDescriptor<BusStopBookmark>(predicate: #Predicate { bookmark in
             bookmark.stopID == stopID
             && bookmark.routeNo == routeNo
@@ -54,27 +54,27 @@ final class DatabaseService: DatabaseServiceProtocol {
         if let context {
             do {
                 let bookmark = try context.fetch(descriptor)
-                completion(.success(bookmark.first))
+                return .success(bookmark.first)
             } catch {
-                completion(.failure(error))
+                return .failure(error)
             }
         } else {
-            completion(.failure(NSError(domain: "Nil context", code: -1, userInfo: nil)))
+            return .failure(NSError(domain: "Nil context", code: -1, userInfo: nil))
         }
     }
     
-    func getBusStopBookmarks(completion: @escaping (Result<[BusStopBookmark], Error>) -> Void) {
+    func getBusStopBookmarks() async -> Result<[BusStopBookmark], Error> {
         let descriptor = FetchDescriptor<BusStopBookmark>()
         
         if let context {
             do {
                 let data = try context.fetch(descriptor)
-                completion(.success(data))
+                return .success(data)
             } catch {
-                completion(.failure(error))
+                return .failure(error)
             }
         } else {
-            completion(.failure(NSError(domain: "Nil context", code: -1, userInfo: nil)))
+            return .failure(NSError(domain: "Nil context", code: -1, userInfo: nil))
         }
     }
 }
