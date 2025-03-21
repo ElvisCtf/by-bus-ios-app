@@ -55,7 +55,8 @@ class RouteCellView: UITableViewCell {
         lblVstack.addSubviews([lblHstack1, lblHstack2])
         
         rootView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(8)
+            $0.top.left.right.equalToSuperview().inset(8)
+            $0.bottom.equalToSuperview()
         }
         
         companyLbl.snp.makeConstraints {
