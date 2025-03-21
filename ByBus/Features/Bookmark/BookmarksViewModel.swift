@@ -33,11 +33,12 @@ final class BookmarksViewModel {
     func getBookmarks() async {
         let result = await dbService.getBusStopBookmarks()
         switch  result {
-            case .success(let bookmarks):
-                self.bookmarks = bookmarks
-                self.reloadDataRelay.accept(())
-            case .failure(_):
-                ()
+        case .success(let bookmarks):
+            self.bookmarks = bookmarks
+            self.reloadDataRelay.accept(())
+            
+        case .failure(_):
+            ()
         }
     }
     
@@ -48,7 +49,7 @@ final class BookmarksViewModel {
             if let etas = data.etas {
                 let formattedEtas = etas.map { $0.time?.hhmm() ?? "" }
                 self.etas[index] = "\n\(formattedEtas.joined(separator: "\n\n"))\n"
-                self.reloadRowRelay.accept(IndexPath(row: 1, section: index))
+                self.reloadRowRelay.accept(IndexPath(row: index, section: 0))
             }
         case .failure(_):
             ()
