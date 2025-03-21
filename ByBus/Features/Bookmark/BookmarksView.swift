@@ -15,11 +15,10 @@ final class BookmarksView: UIView {
     private let disposeBag = DisposeBag()
     
     private lazy var tableView: UITableView = {
-        var tv = UITableView.plain(id: "\(Self.name)_table")
+        var tv = UITableView.plain(id: "\(Self.name)_table", backgroundColor: .systemGroupedBackground)
         tv.delegate = self
         tv.dataSource = self
-        tv.register(RouteCellView.self, forCellReuseIdentifier: RouteCellView.reuseID)
-        tv.register(ExpandedCellView.self, forCellReuseIdentifier: ExpandedCellView.reuseID)
+        tv.register(BookmarkCellView.self, forCellReuseIdentifier: BookmarkCellView.reuseID)
         return tv
     }()
     
@@ -66,50 +65,31 @@ final class BookmarksView: UIView {
 
 // MARK: - Table View Delegate
 extension BookmarksView: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.bookmarks.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let bookmark = viewModel.bookmarks[indexPath.section]
+        let row = indexPath.row
+        let bookmark = viewModel.bookmarks[row]
+        let eta = viewModel.etas[row]
+        let isExpanded = viewModel.isExpanded[row]
         
-        if indexPath.row == 0 {
-            // header cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: RouteCellView.reuseID, for: indexPath) as! RouteCellView
-            cell.setText(with: bookmark)
-            return cell
-        } else {
-            // expandable cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: ExpandedCellView.reuseID, for: indexPath) as! ExpandedCellView
-            cell.setText(viewModel.etas[indexPath.section], isExpanded: viewModel.isExpanded[indexPath.section])
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCellView.reuseID, for: indexPath) as! BookmarkCellView
+        cell.setText(with: bookmark, eta: eta, isExpanded: isExpanded)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let childIndexPath = IndexPath(row: 1, section: indexPath.section)
-        if indexPath.row == 0 {
-            viewModel.isExpanded[indexPath.section].toggle()
-            let bookmark = viewModel.bookmarks[indexPath.section]
-            if viewModel.isExpanded[indexPath.section] {
-                Task {
-                    await viewModel.getEta(index: indexPath.section, stopID: bookmark.stopID, routeNo: bookmark.routeNo)
-                }
-            } else {
-                tableView.reloadRows(at: [childIndexPath], with: .automatic)
+        let row = indexPath.row
+        viewModel.isExpanded[row].toggle()
+        let bookmark = viewModel.bookmarks[row]
+        if viewModel.isExpanded[indexPath.row] {
+            Task {
+                await viewModel.getEta(index: indexPath.row, stopID: bookmark.stopID, routeNo: bookmark.routeNo)
             }
+        } else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let isExpanded = viewModel.isExpanded[indexPath.section]
-        if indexPath.row == 0 {
-            return UITableView.automaticDimension
-        }
-        return isExpanded ? UITableView.automaticDimension : 0
     }
 }
