@@ -10,7 +10,7 @@ import UIKit
 extension UITableView {
     static func plain(id: String = "", backgroundColor: UIColor = .clear, separateStyle: UITableViewCell.SeparatorStyle = .none) -> UITableView {
         let tv = UITableView(frame: .zero, style: .plain)
-        tv.backgroundColor = .clear
+        tv.backgroundColor = backgroundColor
         tv.separatorStyle = .none
         tv.accessibilityIdentifier = id
         return tv
