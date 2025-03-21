@@ -84,7 +84,7 @@ extension BusStopsViewModel {
         case .success(let data):
             if let etas = data.etas {
                 self.busStops[index].etas = etas.map { $0.time?.hhmm() ?? "" }
-                self.reloadRowRelay.accept(IndexPath(row: 1, section: index))
+                self.reloadRowRelay.accept(IndexPath(row: index, section: 0))
             }
         case .failure(_):
             ()
