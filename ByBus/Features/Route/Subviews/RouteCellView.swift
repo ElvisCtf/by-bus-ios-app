@@ -33,6 +33,7 @@ class RouteCellView: UITableViewCell {
     
     func setUI() {
         selectionStyle = .none
+        backgroundColor = .clear
         
         companyLbl.setContentHuggingPriority(.defaultLow + 2, for: .horizontal)
         routeNoLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
@@ -40,8 +41,6 @@ class RouteCellView: UITableViewCell {
         fromLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         
         rootView.border(color: .separator)
-        
-        backgroundColor = .clear
     }
     
     func setLayout() {
