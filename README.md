@@ -6,16 +6,16 @@ By Bus can display the estimated time of arrival (ETA) of all Citybus routes
 ## Features
 ### 1. Search and display a list of Citybus routes
 <img src="https://github.com/user-attachments/assets/99720d23-80bf-48fe-8c7d-cac09c8d2ae9" width="200"/>
-<img src="https://github.com/user-attachments/assets/7498500e-6e66-4b4e-ae7b-ac315155f9e1" width="200"/>
+<img src="https://github.com/user-attachments/assets/4f21c508-9a87-493e-9e67-960bf46da05d" width="200"/>
 
 ### 2. Display the ETA of a selected bus route
-<img src="https://github.com/user-attachments/assets/3de1ae78-2662-4040-813a-b9375e781540" width="200"/>
-<img src="https://github.com/user-attachments/assets/df4dedad-0838-46af-96e5-3d38c943f448" width="200"/>
+<img src="https://github.com/user-attachments/assets/56903e2d-e872-4474-8df1-83cf85972abf" width="200"/>
+<img src="https://github.com/user-attachments/assets/2f1a0062-9c82-4501-89bb-058b1d40be51" width="200"/>
 
 ### 3. Display bus stops in an in-app map view (WIP)
 
 ### 4. Bookmark bus stops to check etimated time of arrival (WIP)
-<img src="https://github.com/user-attachments/assets/ec214d9a-6672-4510-a538-491c322dfa03" width="200"/>
+<img src="https://github.com/user-attachments/assets/8a0a7bca-12d2-4d60-903d-29965e5cae68" width="200"/>
 
 ### 5. Setting page (WIP)
 <img src="https://github.com/user-attachments/assets/89fa4c4d-f8c7-4ccf-a5b8-f5fcce10c3f7" width="200"/>
@@ -23,8 +23,9 @@ By Bus can display the estimated time of arrival (ETA) of all Citybus routes
 ## Tech Stack
 - MVVM
 - UIKit
-- URLSession
 - MapKit
+- URLSession
+- Swift Concurrency
 
 ## Requirements
 - iOS version: 17.0
