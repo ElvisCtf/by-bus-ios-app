@@ -12,6 +12,8 @@ import RxCocoa
 
 final class ExpandedCellView: UITableViewCell {
     static let reuseID = "ExpandedCellView"
+    
+    let rootView = UIView()
     private let arrivalTimeLbl = UILabel.plain(weight: .regular, size: 15, color: .secondaryLabel)
     private let bookmarkBtn = UIButton.selected(id: UI.bookmarkBtn.id, normalImg: "bookmark", selectedImg: "bookmark.fill")
     
@@ -30,13 +32,20 @@ final class ExpandedCellView: UITableViewCell {
     
     private func setUI() {
         selectionStyle = .none
-        contentView.backgroundColor = .secondarySystemGroupedBackground
         bookmarkBtn.isHidden = true
+        rootView.backgroundColor = .systemBackground
+        backgroundColor = .clear
     }
     
     private func setLayout() {
-        contentView.addSubview(arrivalTimeLbl)
-        contentView.addSubview(bookmarkBtn)
+        contentView.addSubview(rootView)
+        rootView.addSubview(arrivalTimeLbl)
+        rootView.addSubview(bookmarkBtn)
+        
+        rootView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(8)
+        }
         
         arrivalTimeLbl.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()

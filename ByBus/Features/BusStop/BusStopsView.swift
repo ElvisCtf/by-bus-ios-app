@@ -20,11 +20,11 @@ final class BusStopsView: UIView {
     private let separator = UIView.plain(bgColor: .separator)
     
     private lazy var tableView: UITableView = {
-        var tv = UITableView.plain(id: UI.tableView.id)
+        var tv = UITableView.plain(id: UI.tableView.id, backgroundColor: .systemGroupedBackground)
         tv.delegate = self
         tv.dataSource = self
-        tv.register(SectionCellView.self, forCellReuseIdentifier: SectionCellView.reuseID)
-        tv.register(ExpandedCellView.self, forCellReuseIdentifier: ExpandedCellView.reuseID)
+        tv.register(BusStopCellView.self, forCellReuseIdentifier: BusStopCellView.reuseID)
+        tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         return tv
     }()
     
@@ -70,13 +70,13 @@ final class BusStopsView: UIView {
             .emit(onNext: { [weak self] in
                 guard let self else { return }
                 self.tableView.reloadData()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         viewModel.reloadRowRelay.asSignal()
             .emit(onNext: { [weak self] indexPath in
                 guard let self else { return }
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         originDestinView.swapBtn.rx.tap.asSignal()
             .emit(onNext: { [weak self] in
@@ -84,7 +84,7 @@ final class BusStopsView: UIView {
                 self.switchDirection()
                 self.originDestinView.swap()
                 self.getBusStops()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     private func getBusStops() {
@@ -107,59 +107,41 @@ final class BusStopsView: UIView {
 
 // MARK: - Table View Delegate
 extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.busStops.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let busStop = viewModel.busStops[indexPath.section]
+        let row = indexPath.row
+        let busStop = viewModel.busStops[row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: BusStopCellView.reuseID, for: indexPath) as! BusStopCellView
+        cell.setText(with: busStop)
+        cell.onSelect = { [weak self] busStop in
+            guard let self else { return }
+            self.saveBusStop(with: busStop)
+        }
+        return cell
+    }
+    
+    private func saveBusStop(with busStop: BusStop) {
+        Task {
+            let origin = self.viewModel.route.origin
+            let destination = self.viewModel.route.destination
+            await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, name: busStop.name, origin: origin, destination: destination)
+        }
+    }
         
-        if indexPath.row == 0 {
-            // header cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: SectionCellView.reuseID, for: indexPath) as! SectionCellView
-            cell.setText(with: busStop)
-            return cell
-        } else {
-            // expandable cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: ExpandedCellView.reuseID, for: indexPath) as! ExpandedCellView
-            cell.onSelect = { [weak self] isSelected, busStop in
-                guard let self else { return }
-                Task {
-                    let origin = self.viewModel.route.origin
-                    let destination = self.viewModel.route.destination
-                    await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, name: busStop.name, origin: origin, destination: destination)
-                }
-            }
-            cell.setText(with: busStop)
-            return cell
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let childIndexPath = IndexPath(row: 1, section: indexPath.section)
-        if indexPath.row == 0 {
-            viewModel.busStops[indexPath.section].isExpanded.toggle()
-            let busStop = viewModel.busStops[indexPath.section]
-            if busStop.isExpanded {
-                Task {
-                    await viewModel.getEta(index: indexPath.section, stopID: busStop.id, routeNo: busStop.routeNo)
-                }
-            } else {
-                tableView.reloadRows(at: [childIndexPath], with: .automatic)
+        let row = indexPath.row
+        viewModel.busStops[row].isExpanded.toggle()
+        let busStop = viewModel.busStops[row]
+        if busStop.isExpanded {
+            Task {
+                await viewModel.getEta(index: indexPath.row, stopID: busStop.id, routeNo: busStop.routeNo)
             }
+        } else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let busStop = viewModel.busStops[indexPath.section]
-        if indexPath.row == 0 {
-            return UITableView.automaticDimension
-        }
-        return busStop.isExpanded ? UITableView.automaticDimension : 0
     }
 }
 
