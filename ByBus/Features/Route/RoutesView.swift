@@ -19,6 +19,7 @@ final class RoutesView: UIView {
         tv.delegate = self
         tv.dataSource = self
         tv.register(RouteCellView.self, forCellReuseIdentifier: RouteCellView.reuseID)
+        tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         return tv
     }()
     
