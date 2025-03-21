@@ -105,14 +105,14 @@ extension BusStopsViewModel {
         }
     }
     
-    func saveBookmark(id stopID: String, routeNo: String, origin: TcEnSc, destination: TcEnSc) async {
+    func saveBookmark(id stopID: String, routeNo: String, name: TcEnSc, origin: TcEnSc, destination: TcEnSc) async {
         let result = await dbService.checkBusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination)
         switch result {
         case .success(let bookmark):
             if let bookmark {
                 self.deleteBookmark(bookmark)
             } else {
-                self.dbService.saveBusStopBookmark(BusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination))
+                self.dbService.saveBusStopBookmark(BusStopBookmark(stopID: stopID, routeNo: routeNo, origin: origin, destination: destination, name: name))
             }
         case .failure(_):
             ()

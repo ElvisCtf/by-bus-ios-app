@@ -131,7 +131,7 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
                 Task {
                     let origin = self.viewModel.route.origin
                     let destination = self.viewModel.route.destination
-                    await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, origin: origin, destination: destination)
+                    await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, name: busStop.name, origin: origin, destination: destination)
                 }
             }
             cell.setText(with: busStop)
