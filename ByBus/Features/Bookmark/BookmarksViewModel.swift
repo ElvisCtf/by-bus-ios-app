@@ -48,7 +48,7 @@ final class BookmarksViewModel {
         case .success(let data):
             if let etas = data.etas {
                 let formattedEtas = etas.map { $0.time?.hhmm() ?? "" }
-                self.etas[index] = "\n\(formattedEtas.joined(separator: "\n\n"))\n"
+                self.etas[index] = "\(formattedEtas.joined(separator: "\n\n"))"
                 self.reloadRowRelay.accept(IndexPath(row: index, section: 0))
             }
         case .failure(_):

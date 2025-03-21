@@ -16,7 +16,7 @@ final class BusStopCellView: UITableViewCell {
     private var busStop: BusStop?
     
     private let rootView = UIView.plain(cornerRadius: 8, bgColor: .systemBackground)
-    private let nameLbl = UILabel.plain(id: UI.busStopNameLbl.id, weight: .regular, size: 17, color: .label)
+    private let nameLbl = UILabel.plain(id: UI.busStopNameLbl.id, lines: 1, weight: .regular, size: 17, color: .label)
     private let separator = UIView.plain(bgColor: .separator)
     private let etaView = EtaView()
     private let disposeBag = DisposeBag()
@@ -58,7 +58,7 @@ final class BusStopCellView: UITableViewCell {
         }
         
         etaView.snp.makeConstraints {
-            $0.top.equalTo(separator.snp.bottom).offset(4)
+            $0.top.equalTo(separator.snp.bottom)
             $0.left.bottom.right.equalToSuperview()
         }
     }
@@ -76,7 +76,7 @@ final class BusStopCellView: UITableViewCell {
     func setText(with busStop: BusStop) {
         self.busStop = busStop
         nameLbl.text = "\(busStop.index). \(busStop.name.tc)"
-        etaView.setText(with: busStop)
+        etaView.setText(busStop.arrivalTime, isExpanded: busStop.isExpanded)
         separator.isHidden = !busStop.isExpanded
     }
     
