@@ -73,13 +73,13 @@ final class BookmarkCellView: RouteCellView {
         }
         
         separator.snp.makeConstraints {
-            $0.top.equalTo(lblVstack.snp.bottom).offset(8)
+            $0.top.equalTo(lblVstack.snp.bottom).offset(12)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(1)
         }
         
         etaView.snp.makeConstraints {
-            $0.top.equalTo(separator.snp.bottom).offset(4)
+            $0.top.equalTo(separator.snp.bottom)
             $0.left.bottom.right.equalToSuperview()
         }
     }

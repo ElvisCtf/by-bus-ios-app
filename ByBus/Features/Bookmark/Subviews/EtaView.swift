@@ -28,7 +28,7 @@ final class EtaView: UIView {
         addSubview(bookmarkBtn)
         
         arrivalTimeLbl.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(0)
             $0.left.equalToSuperview().inset(16)
         }
         
@@ -40,27 +40,23 @@ final class EtaView: UIView {
         }
     }
     
-    func setText(with busStop: BusStop) {
-        self.busStop = busStop
-        bookmarkBtn.isSelected = busStop.isSaved
-        if busStop.arrivalTime != "" && busStop.isExpanded {
-            arrivalTimeLbl.text = busStop.arrivalTime
-            bookmarkBtn.isHidden = false
-        } else {
-            arrivalTimeLbl.text = ""
-            bookmarkBtn.isHidden = true
-        }
-    }
-    
     func setText(_ text: String, isExpanded: Bool) {
         bookmarkBtn.isSelected = true
         
         if text != "" && isExpanded {
             self.arrivalTimeLbl.text = text
             self.bookmarkBtn.isHidden = false
+            updateEtaViewUI(padding: 12)
         } else {
             self.arrivalTimeLbl.text = ""
             self.bookmarkBtn.isHidden = true
+            updateEtaViewUI(padding: 0)
+        }
+    }
+    
+    private func updateEtaViewUI(padding: CGFloat) {
+        arrivalTimeLbl.snp.updateConstraints {
+            $0.top.bottom.equalToSuperview().inset(padding)
         }
     }
     
