@@ -15,7 +15,7 @@ final class RoutesView: UIView {
     private let disposeBag = DisposeBag()
     
     private lazy var tableView: UITableView = {
-        var tv = UITableView.plain(id: "\(Self.name)_table")
+        var tv = UITableView.plain(id: "\(Self.name)_table", backgroundColor: .systemGroupedBackground)
         tv.delegate = self
         tv.dataSource = self
         tv.register(RouteCellView.self, forCellReuseIdentifier: RouteCellView.reuseID)

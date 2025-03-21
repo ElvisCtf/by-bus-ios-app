@@ -8,12 +8,12 @@
 import UIKit
 
 extension UIView {
-    static func plain(cornerRadius: CGFloat = 0, isClipsToBounds: Bool = false, bgColor: UIColor = .clear) -> UIView {
+    static func plain(cornerRadius: CGFloat = 0, bgColor: UIColor = .clear) -> UIView {
         let v = UIView()
         if cornerRadius > 0 {
             v.layer.cornerRadius = cornerRadius
+            v.clipsToBounds = true
         }
-        v.clipsToBounds = isClipsToBounds
         v.backgroundColor = bgColor
         return v
     }
@@ -22,5 +22,15 @@ extension UIView {
         if !id.isEmpty {
             self.accessibilityIdentifier = id
         }
+    }
+    
+    func border(width: CGFloat = 1, color: UIColor) {
+        self.layer.borderWidth = width
+        self.layer.borderColor = color.cgColor
+    }
+    
+    func cornerRadius(_ radius: CGFloat) {
+        self.layer.cornerRadius = radius
+        self.clipsToBounds = true
     }
 }
