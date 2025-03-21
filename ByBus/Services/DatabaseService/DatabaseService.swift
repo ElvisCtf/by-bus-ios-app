@@ -25,6 +25,7 @@ final class DatabaseService: DatabaseServiceProtocol {
             container = try ModelContainer(for: BusStopBookmark.self)
             if let container {
                 context = ModelContext(container)
+                context?.autosaveEnabled = true
             }
         } catch {
             print("Error initializing database container:", error)
