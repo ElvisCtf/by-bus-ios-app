@@ -40,8 +40,8 @@ final class EtaView: UIView {
         }
     }
     
-    func setText(_ text: String, isExpanded: Bool) {
-        bookmarkBtn.isSelected = true
+    func setText(_ text: String, isExpanded: Bool, isSaved: Bool = true) {
+        bookmarkBtn.isSelected = isSaved
         
         if text != "" && isExpanded {
             self.arrivalTimeLbl.text = text
