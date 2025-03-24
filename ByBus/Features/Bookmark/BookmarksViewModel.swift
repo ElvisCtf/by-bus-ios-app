@@ -42,6 +42,13 @@ final class BookmarksViewModel {
         }
     }
     
+    func removeBookmark(at index: Int) {
+        guard index >= 0 && index < bookmarks.count else { return }
+        let bookmarkToRemove = bookmarks[index]
+        dbService.deleteBusStopBookmark(bookmarkToRemove)
+        bookmarks.remove(at: index)
+    }
+    
     func getEta(index: Int, stopID: String, routeNo: String) async {
         let result = await apiService.getEta(stopID: stopID, routeNo: routeNo)
         switch result {

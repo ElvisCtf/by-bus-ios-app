@@ -9,7 +9,7 @@ import UIKit
 
 class BookmarksViewController: UIViewController {
     private let viewModel = BookmarksViewModel()
-    private lazy var bookmarkView = BookmarksView(with: viewModel)
+    private lazy var bookmarkView = BookmarksView(with: viewModel, viewController: self)
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
