@@ -4,11 +4,11 @@
 By Bus can display the estimated time of arrival (ETA) of all Citybus routes
 
 ## Features
-### 1. Search and display a list of Citybus routes
+### 1. Search and display a list of Citybus routes (WIP)
 <img src="https://github.com/user-attachments/assets/99720d23-80bf-48fe-8c7d-cac09c8d2ae9" width="200"/>
 <img src="https://github.com/user-attachments/assets/4f21c508-9a87-493e-9e67-960bf46da05d" width="200"/>
 
-### 2. Display the ETA of a selected bus route
+### 2. Display the ETA of a selected bus route (WIP)
 <img src="https://github.com/user-attachments/assets/56903e2d-e872-4474-8df1-83cf85972abf" width="200"/>
 <img src="https://github.com/user-attachments/assets/2f1a0062-9c82-4501-89bb-058b1d40be51" width="200"/>
 
@@ -26,6 +26,7 @@ By Bus can display the estimated time of arrival (ETA) of all Citybus routes
 - MapKit
 - URLSession
 - Swift Concurrency
+- Swift Data
 
 ## Requirements
 - iOS version: 17.0
