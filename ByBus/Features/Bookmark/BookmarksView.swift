@@ -12,7 +12,10 @@ import RxSwift
 final class BookmarksView: UIView {
     static let name = "BookmarkView"
     private let viewModel: BookmarksViewModel
+    private weak var viewController: UIViewController?
     private let disposeBag = DisposeBag()
+    
+    private lazy var editBtn = UIBarButtonItem(title: "修改", style: .plain, target: self, action: #selector(editBookmark))
     
     private lazy var tableView: UITableView = {
         var tv = UITableView.plain(id: "\(Self.name)_table", backgroundColor: .systemGroupedBackground)
@@ -23,8 +26,9 @@ final class BookmarksView: UIView {
         return tv
     }()
     
-    init(with viewModel: BookmarksViewModel) {
+    init(with viewModel: BookmarksViewModel, viewController: UIViewController) {
         self.viewModel = viewModel
+        self.viewController = viewController
         super.init(frame: .zero)
         setUI()
         setLayout()
@@ -33,6 +37,12 @@ final class BookmarksView: UIView {
     
     private func setUI() {
         backgroundColor = .systemBackground
+        viewController?.navigationItem.rightBarButtonItem = editBtn
+    }
+    
+    @objc private func editBookmark() {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+        editBtn.title = tableView.isEditing ? "完成" : "修改"
     }
     
     private func setLayout() {
@@ -91,6 +101,19 @@ extension BookmarksView: UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            viewModel.removeBookmark(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
         }
     }
 }
