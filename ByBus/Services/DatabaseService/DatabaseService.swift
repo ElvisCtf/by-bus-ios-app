@@ -25,7 +25,6 @@ final class DatabaseService: DatabaseServiceProtocol {
             container = try ModelContainer(for: BusStopBookmark.self)
             if let container {
                 context = ModelContext(container)
-                context?.autosaveEnabled = true
             }
         } catch {
             print("Error initializing database container:", error)
@@ -35,12 +34,22 @@ final class DatabaseService: DatabaseServiceProtocol {
     func saveBusStopBookmark(_ bookmark: BusStopBookmark) {
         if let context {
             context.insert(bookmark)
+            do {
+                try context.save()
+            } catch {
+                print("Error saving ModelContext:", error)
+            }
         }
     }
     
     func deleteBusStopBookmark(_ bookmark: BusStopBookmark) {
         if let context {
             context.delete(bookmark)
+            do {
+                try context.save()
+            } catch {
+                print("Error saving ModelContext:", error)
+            }
         }
     }
     
