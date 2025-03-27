@@ -30,9 +30,9 @@ final class BookmarkCellView: RouteCellView {
         stopPrefixLbl.setContentHuggingPriority(.defaultLow + 2, for: .horizontal)
         stopLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         
-        fromLbl.text       = "由"
-        toLbl.text         = "往"
-        stopPrefixLbl.text = "站"
+        fromLbl.text       = String(localized: "from")
+        toLbl.text         = String(localized: "to")
+        stopPrefixLbl.text = String(localized: "station")
         
         separator.isHidden = true
     }
@@ -82,14 +82,22 @@ final class BookmarkCellView: RouteCellView {
             $0.top.equalTo(separator.snp.bottom)
             $0.left.bottom.right.equalToSuperview()
         }
+        
+        fromLbl.snp.makeConstraints {
+            $0.width.equalTo(stopPrefixLbl.snp.width)
+        }
+        
+        toLbl.snp.makeConstraints {
+            $0.width.equalTo(stopPrefixLbl.snp.width)
+        }
     }
     
     func setText(with bookmark: BusStopBookmark, eta: String, isExpanded: Bool) {
-        companyLbl.text    = Company.ctb.zhName
+        companyLbl.text    = Company.ctb.name
         routeNoLbl.text    = bookmark.routeNo
-        destinLbl.text     = bookmark.origin.tc
-        originLbl.text     = bookmark.destination.tc
-        stopLbl.text       = bookmark.name.tc
+        destinLbl.text     = bookmark.origin.value
+        originLbl.text     = bookmark.destination.value
+        stopLbl.text       = bookmark.name.value
         etaView.setText(eta, isExpanded: isExpanded)
         separator.isHidden = !isExpanded
     }

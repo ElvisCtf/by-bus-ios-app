@@ -15,6 +15,6 @@ class SettingViewController: UIViewController {
     }
     
     func setUI() {
-        title = "設定"
+        title = String(localized: "setting")
     }
 }
