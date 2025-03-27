@@ -39,7 +39,7 @@ final class BusStopsView: UIView {
     
     private func setUI() {
         backgroundColor = .systemBackground
-        originDestinView.setText(origin: viewModel.route.origin.tc, destin: viewModel.route.destination.tc)
+        originDestinView.setText(origin: viewModel.route.origin.value, destin: viewModel.route.destination.value)
     }
     
     private func setLayout() {

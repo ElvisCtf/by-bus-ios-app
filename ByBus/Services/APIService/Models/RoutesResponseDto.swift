@@ -59,17 +59,10 @@ struct Route: Codable, Equatable {
 enum Company: String, Codable {
     case ctb = "CTB"
     
-    var zhName: String {
+    var name: String {
         switch self {
         case .ctb:
-            return "城巴"
-        }
-    }
-    
-    var enName: String {
-        switch self {
-        case .ctb:
-            return "Citybus"
+            return String(localized: "citybus")
         }
     }
 }
@@ -78,4 +71,16 @@ struct TcEnSc: Codable, Equatable {
     let tc: String
     let en: String
     let sc: String
+    
+    var value: String {
+        let locale = Locale.current.identifier
+        if locale.hasPrefix("zh-Hant") {
+            return tc
+        } else if locale.hasPrefix("en") {
+            return en
+        } else if locale.hasPrefix("zh-Hans") {
+            return sc
+        }
+        return tc
+    }
 }

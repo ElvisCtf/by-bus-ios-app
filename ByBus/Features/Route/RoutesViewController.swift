@@ -22,7 +22,7 @@ class RoutesViewController: UIViewController {
     }
     
     func setUI() {
-        title = "路線"
+        title = String(localized: "route")
         view = routesView
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false

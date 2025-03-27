@@ -69,6 +69,10 @@ class RouteCellView: UITableViewCell {
             $0.width.equalTo(48)
         }
         
+        toLbl.snp.makeConstraints {
+            $0.width.equalTo(fromLbl.snp.width)
+        }
+        
         lblVstack.snp.makeConstraints {
             $0.left.equalTo(routeNoLbl.snp.right).offset(24)
             $0.right.equalToSuperview().inset(8)
@@ -77,12 +81,12 @@ class RouteCellView: UITableViewCell {
     }
     
     func setText(with route: Route) {
-        companyLbl.text = route.company?.zhName
+        companyLbl.text = route.company?.name
         routeNoLbl.text = route.routeNo
-        destinLbl.text  = route.destTc
-        originLbl.text  = route.origTc
-        fromLbl.text    = "由"
-        toLbl.text      = "往"
+        destinLbl.text  = route.destination.value
+        originLbl.text  = route.origin.value
+        fromLbl.text    = String(localized: "from")
+        toLbl.text      = String(localized: "to")
     }
     
     required init?(coder: NSCoder) {

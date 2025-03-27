@@ -15,7 +15,7 @@ final class BookmarksView: UIView {
     private weak var viewController: UIViewController?
     private let disposeBag = DisposeBag()
     
-    private lazy var editBtn = UIBarButtonItem(title: "修改", style: .plain, target: self, action: #selector(editBookmark))
+    private lazy var editBtn = UIBarButtonItem(title: String(localized: "edit"), style: .plain, target: self, action: #selector(editBookmark))
     
     private lazy var tableView: UITableView = {
         var tv = UITableView.plain(id: "\(Self.name)_table", backgroundColor: .systemGroupedBackground)
@@ -42,7 +42,7 @@ final class BookmarksView: UIView {
     
     @objc private func editBookmark() {
         tableView.setEditing(!tableView.isEditing, animated: true)
-        editBtn.title = tableView.isEditing ? "完成" : "修改"
+        editBtn.title = tableView.isEditing ? String(localized: "done") : String(localized: "edit")
     }
     
     private func setLayout() {

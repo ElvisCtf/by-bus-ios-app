@@ -24,7 +24,7 @@ class BookmarksViewController: UIViewController {
     }
     
     func setUI() {
-        title = "收藏"
+        title = String(localized: "bookmark")
         view = bookmarkView
     }
 }

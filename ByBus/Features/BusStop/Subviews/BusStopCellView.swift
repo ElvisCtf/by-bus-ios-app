@@ -75,7 +75,7 @@ final class BusStopCellView: UITableViewCell {
     
     func setText(with busStop: BusStop) {
         self.busStop = busStop
-        nameLbl.text = "\(busStop.index). \(busStop.name.tc)"
+        nameLbl.text = "\(busStop.index). \(busStop.name.value)"
         etaView.setText(busStop.arrivalTime, isExpanded: busStop.isExpanded, isSaved: busStop.isSaved)
         separator.isHidden = !busStop.isExpanded
     }

@@ -11,21 +11,21 @@ final class TabBarController: UITabBarController {
     private var routes: [Route]
     
     private lazy var routeTab = UINavigationController(
-        title: "路線",
+        title: String(localized: "route"),
         defaultImage: "bus",
         selectedImage: "bus.fill",
         viewController: RoutesViewController(routes: routes)
     )
     
     private lazy var bookmarkTab = UINavigationController(
-        title: "收藏",
+        title: String(localized: "bookmark"),
         defaultImage: "bookmark",
         selectedImage: "bookmark.fill",
         viewController: BookmarksViewController()
     )
     
     private lazy var settingTab = UINavigationController(
-        title: "設定",
+        title: String(localized: "setting"),
         defaultImage: "gearshape",
         selectedImage: "gearshape.fill",
         viewController: SettingViewController()
