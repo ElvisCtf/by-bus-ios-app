@@ -8,14 +8,16 @@
 import RxSwift
 import RxCocoa
 import Foundation
+import MapKit
 
 final class BusStopsViewModel {
     let reloadDataRelay = PublishRelay<Void>()
     let reloadRowRelay = PublishRelay<IndexPath>()
     
+    var direction: Direction = .outbound
     var route: Route
     var busStops = [BusStop]()
-    var direction: Direction = .outbound
+    var coordinates: [CLLocationCoordinate2D] = []
     
     private let apiService: APIServiceProtocol
     private let dbService: DatabaseServiceProtocol
@@ -43,6 +45,7 @@ extension BusStopsViewModel {
         case .success(let data):
             let routeStops = data.routeStops ?? []
             self.busStops = await getBusStopDetails(with: routeStops, routeNo: no)
+            self.coordinates = getCoordinates(of: self.busStops)
             self.reloadDataRelay.accept(())
         case .failure(_):
             ()
@@ -76,6 +79,18 @@ extension BusStopsViewModel {
             fetchedBusStops.sort { $0.index < $1.index }
             return fetchedBusStops
         }
+    }
+    
+    private func getCoordinates(of busStops: [BusStop]) -> [CLLocationCoordinate2D] {
+        var result = [CLLocationCoordinate2D]()
+        for busStop in busStops {
+            if let coordinate = busStop.coordinate {
+                result.append(coordinate)
+            } else  {
+                return []
+            }
+        }
+        return result
     }
     
     func getEta(index: Int, stopID: String, routeNo: String) async {

@@ -16,8 +16,8 @@ final class SwapperView: UIView {
     private let destinIcon = UIImageView.system(name: "mappin.and.ellipse", color: .systemRed)
     private let iconVstack = UIStackView.vertical(spacing: 10, padding: .zero)
     
-    private let originLbl = PaddedLabel(id: UI.originLbl.id, weight: .regular, size: 17, color: .label, padding: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16), borderColor: .systemGray2)
-    private let destinLbl = PaddedLabel(id: UI.destinLbl.id, weight: .semibold, size: 17, color: .label, padding: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16), borderColor: .systemGray2)
+    private let originLbl = PaddedLabel(id: UI.originLbl.id, weight: .regular, size: 17, color: .label, padding: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12), borderColor: .systemGray2)
+    private let destinLbl = PaddedLabel(id: UI.destinLbl.id, weight: .semibold, size: 17, color: .label, padding: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12), borderColor: .systemGray2)
    
     let swapBtn = UIButton.icon(id: UI.swapBtn.id, imgName: "arrow.up.arrow.down", bgColor: .clear, imgColor: .systemBlue)
     
@@ -56,13 +56,11 @@ final class SwapperView: UIView {
         }
         
         originLbl.snp.makeConstraints {
-            $0.top.equalToSuperview()
             $0.left.equalTo(iconVstack.snp.right).offset(8)
             $0.centerY.equalTo(originIcon.snp.centerY)
         }
         
         destinLbl.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
             $0.left.equalTo(iconVstack.snp.right).offset(8)
             $0.centerY.equalTo(destinIcon.snp.centerY)
             $0.width.equalTo(originLbl.snp.width)

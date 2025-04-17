@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -18,6 +19,17 @@ final class BusStopsView: UIView {
     
     private let originDestinView = SwapperView()
     private let separator = UIView.plain(bgColor: .separator)
+    
+    private lazy var mapView: MKMapView = {
+        var mapView = MKMapView()
+        mapView.showsUserLocation = true
+        mapView.showsCompass = true
+        mapView.isZoomEnabled = true
+        mapView.isRotateEnabled = true
+        mapView.userTrackingMode = .followWithHeading
+        mapView.delegate = self
+        return mapView
+    }()
     
     private lazy var tableView: UITableView = {
         var tv = UITableView.plain(id: UI.tableView.id, backgroundColor: .systemGroupedBackground)
@@ -45,6 +57,7 @@ final class BusStopsView: UIView {
     private func setLayout() {
         addSubview(originDestinView)
         addSubview(separator)
+        addSubview(mapView)
         addSubview(tableView)
         
         originDestinView.snp.makeConstraints {
@@ -58,8 +71,14 @@ final class BusStopsView: UIView {
             $0.height.equalTo(1)
         }
         
-        tableView.snp.makeConstraints {
+        mapView.snp.makeConstraints {
             $0.top.equalTo(separator.snp.bottom)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(originDestinView.snp.height).multipliedBy(3)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(mapView.snp.bottom)
             $0.left.right.equalToSuperview()
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
@@ -91,9 +110,30 @@ final class BusStopsView: UIView {
         Task {
             if let routeNo = viewModel.route.routeNo {
                 await viewModel.getBusStops(no: routeNo)
+                drawPins()
             }
         }
     }
+    
+    private func drawPins() {
+        let coordinates = viewModel.coordinates
+        for (index, coordinate) in coordinates.enumerated() {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(index + 1)"
+            mapView.addAnnotation(annotation)
+        }
+        
+        zoomToCoordinate(coordinate: coordinates.first, regionRadius: 1000)
+    }
+    
+    private func zoomToCoordinate(coordinate: CLLocationCoordinate2D?, regionRadius: CLLocationDistance) {
+        if let coordinate {
+            let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(coordinateRegion, animated: true)
+        }
+    }
+
     
     private func switchDirection() {
         viewModel.switchDirection()
@@ -130,7 +170,7 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
             await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, name: busStop.name, origin: origin, destination: destination)
         }
     }
-        
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         viewModel.busStops[row].isExpanded.toggle()
@@ -142,7 +182,15 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
         } else {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        
+        zoomToCoordinate(coordinate: viewModel.busStops[row].coordinate, regionRadius: 1000)
     }
+}
+
+
+// MARK: - MKMapViewDelegate
+extension BusStopsView: MKMapViewDelegate {
+
 }
 
 
