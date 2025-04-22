@@ -20,6 +20,8 @@ final class BusStopsView: UIView {
     private let originDestinView = SwapperView()
     private let separator = UIView.plain(bgColor: .separator)
     
+    private let locationManager = CLLocationManager()
+    
     private lazy var mapView: MKMapView = {
         var mapView = MKMapView()
         mapView.showsUserLocation = true
@@ -47,6 +49,7 @@ final class BusStopsView: UIView {
         setLayout()
         setBinding()
         getBusStops()
+        showUserCurrentLocation()
     }
     
     private func setUI() {
@@ -74,7 +77,7 @@ final class BusStopsView: UIView {
         mapView.snp.makeConstraints {
             $0.top.equalTo(separator.snp.bottom)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(originDestinView.snp.height).multipliedBy(3)
+            $0.height.equalTo(originDestinView.snp.height).multipliedBy(3.5)
         }
         
         tableView.snp.makeConstraints {
@@ -100,7 +103,7 @@ final class BusStopsView: UIView {
         originDestinView.swapBtn.rx.tap.asSignal()
             .emit(onNext: { [weak self] in
                 guard let self else { return }
-                self.switchDirection()
+                self.viewModel.switchDirection()
                 self.originDestinView.swap()
                 self.getBusStops()
             }).disposed(by: disposeBag)
@@ -116,6 +119,8 @@ final class BusStopsView: UIView {
     }
     
     private func drawPins() {
+        mapView.removeAnnotations(mapView.annotations)
+        
         let coordinates = viewModel.coordinates
         for (index, coordinate) in coordinates.enumerated() {
             let annotation = MKPointAnnotation()
@@ -133,10 +138,11 @@ final class BusStopsView: UIView {
             mapView.setRegion(coordinateRegion, animated: true)
         }
     }
-
     
-    private func switchDirection() {
-        viewModel.switchDirection()
+    private func showUserCurrentLocation() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     required init?(coder: NSCoder) {
@@ -190,6 +196,12 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - MKMapViewDelegate
 extension BusStopsView: MKMapViewDelegate {
+
+}
+
+
+// MARK: - CLLocationManagerDelegate
+extension BusStopsView: CLLocationManagerDelegate {
 
 }
 
