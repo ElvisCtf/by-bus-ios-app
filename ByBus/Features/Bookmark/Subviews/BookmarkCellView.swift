@@ -14,8 +14,8 @@ final class BookmarkCellView: RouteCellView {
     }
     
     private let stopPrefixLbl = UILabel.plain(id: UI.stopPrefix.id, lines: 1, weight: .light, size: 13, color: .label)
-    private let stopLbl = UILabel.plain(id: UI.stop.id, lines: 1, weight: .regular, size: 17, color: .label)
-    private let lblHstack3 = UIStackView.horizontal(spacing: 4, padding: .zero, distribution: .fill)
+    private let stopLbl = UILabel.plain(id: UI.stop.id, lines: 0, weight: .regular, size: 17, color: .label)
+    private let lblHstack3 = UIStackView.horizontal(spacing: 6, padding: .zero, distribution: .fill)
     private let separator = UIView.plain(bgColor: .separator)
     private let etaView = EtaView()
     
@@ -30,50 +30,44 @@ final class BookmarkCellView: RouteCellView {
         stopPrefixLbl.setContentHuggingPriority(.defaultLow + 2, for: .horizontal)
         stopLbl.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         
-        fromLbl.text       = "由"
-        toLbl.text         = "往"
-        stopPrefixLbl.text = "站"
+        fromLbl.text       = String(localized: "from")
+        toLbl.text         = String(localized: "to")
+        stopPrefixLbl.text = String(localized: "station")
         
         separator.isHidden = true
     }
  
     override func setLayout() {
         contentView.addSubview(rootView)
-        rootView.addSubview(companyLbl)
-        rootView.addSubview(routeNoLbl)
-        rootView.addSubview(lblVstack)
+        rootView.addSubview(leftLblVstack)
+        rootView.addSubview(rightLblVstack)
         rootView.addSubview(separator)
         rootView.addSubview(etaView)
         
+        leftLblVstack.addSubviews([companyLbl, routeNoLbl])
         lblHstack1.addSubviews([fromLbl, originLbl])
         lblHstack2.addSubviews([toLbl, destinLbl])
         lblHstack3.addSubviews([stopPrefixLbl, stopLbl])
-        lblVstack.addSubviews([lblHstack1, lblHstack2, lblHstack3])
+        rightLblVstack.addSubviews([lblHstack1, lblHstack2, lblHstack3])
         
         rootView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview().inset(8)
             $0.bottom.equalToSuperview()
         }
         
-        companyLbl.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(16)
-            $0.centerY.equalTo(lblVstack.snp.centerY)
+        leftLblVstack.snp.makeConstraints {
+            $0.left.equalToSuperview().inset(12)
+            $0.centerY.equalTo(rightLblVstack.snp.centerY)
+            $0.width.equalToSuperview().multipliedBy(0.15)
         }
         
-        routeNoLbl.snp.makeConstraints {
-            $0.left.equalTo(companyLbl.snp.right).offset(16)
-            $0.centerY.equalTo(lblVstack.snp.centerY)
-            $0.width.equalTo(48)
-        }
-        
-        lblVstack.snp.makeConstraints {
-            $0.left.equalTo(routeNoLbl.snp.right).offset(24)
-            $0.right.equalToSuperview().inset(8)
-            $0.top.equalToSuperview().inset(12)
+        rightLblVstack.snp.makeConstraints {
+            $0.left.equalTo(leftLblVstack.snp.right).offset(18)
+            $0.top.right.equalToSuperview().inset(12)
         }
         
         separator.snp.makeConstraints {
-            $0.top.equalTo(lblVstack.snp.bottom).offset(12)
+            $0.top.equalTo(rightLblVstack.snp.bottom).offset(12)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(1)
         }
@@ -82,14 +76,22 @@ final class BookmarkCellView: RouteCellView {
             $0.top.equalTo(separator.snp.bottom)
             $0.left.bottom.right.equalToSuperview()
         }
+        
+        fromLbl.snp.makeConstraints {
+            $0.width.equalTo(stopPrefixLbl.snp.width)
+        }
+        
+        toLbl.snp.makeConstraints {
+            $0.width.equalTo(stopPrefixLbl.snp.width)
+        }
     }
     
     func setText(with bookmark: BusStopBookmark, eta: String, isExpanded: Bool) {
-        companyLbl.text    = Company.ctb.zhName
+        companyLbl.text    = Company.ctb.name
         routeNoLbl.text    = bookmark.routeNo
-        destinLbl.text     = bookmark.origin.tc
-        originLbl.text     = bookmark.destination.tc
-        stopLbl.text       = bookmark.name.tc
+        destinLbl.text     = bookmark.origin.value
+        originLbl.text     = bookmark.destination.value
+        stopLbl.text       = bookmark.name.value
         etaView.setText(eta, isExpanded: isExpanded)
         separator.isHidden = !isExpanded
     }

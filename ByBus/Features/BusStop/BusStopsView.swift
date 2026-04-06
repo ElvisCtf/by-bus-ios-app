@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -18,6 +19,19 @@ final class BusStopsView: UIView {
     
     private let originDestinView = SwapperView()
     private let separator = UIView.plain(bgColor: .separator)
+    
+    private let locationManager = CLLocationManager()
+    
+    private lazy var mapView: MKMapView = {
+        var mapView = MKMapView()
+        mapView.showsUserLocation = true
+        mapView.showsCompass = true
+        mapView.isZoomEnabled = true
+        mapView.isRotateEnabled = true
+        mapView.userTrackingMode = .followWithHeading
+        mapView.delegate = self
+        return mapView
+    }()
     
     private lazy var tableView: UITableView = {
         var tv = UITableView.plain(id: UI.tableView.id, backgroundColor: .systemGroupedBackground)
@@ -35,16 +49,18 @@ final class BusStopsView: UIView {
         setLayout()
         setBinding()
         getBusStops()
+        showUserCurrentLocation()
     }
     
     private func setUI() {
         backgroundColor = .systemBackground
-        originDestinView.setText(origin: viewModel.route.origin.tc, destin: viewModel.route.destination.tc)
+        originDestinView.setText(origin: viewModel.route.origin.value, destin: viewModel.route.destination.value)
     }
     
     private func setLayout() {
         addSubview(originDestinView)
         addSubview(separator)
+        addSubview(mapView)
         addSubview(tableView)
         
         originDestinView.snp.makeConstraints {
@@ -58,8 +74,14 @@ final class BusStopsView: UIView {
             $0.height.equalTo(1)
         }
         
-        tableView.snp.makeConstraints {
+        mapView.snp.makeConstraints {
             $0.top.equalTo(separator.snp.bottom)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(originDestinView.snp.height).multipliedBy(3.5)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(mapView.snp.bottom)
             $0.left.right.equalToSuperview()
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
@@ -81,7 +103,7 @@ final class BusStopsView: UIView {
         originDestinView.swapBtn.rx.tap.asSignal()
             .emit(onNext: { [weak self] in
                 guard let self else { return }
-                self.switchDirection()
+                self.viewModel.switchDirection()
                 self.originDestinView.swap()
                 self.getBusStops()
             }).disposed(by: disposeBag)
@@ -91,12 +113,29 @@ final class BusStopsView: UIView {
         Task {
             if let routeNo = viewModel.route.routeNo {
                 await viewModel.getBusStops(no: routeNo)
+                drawPins()
             }
         }
     }
     
-    private func switchDirection() {
-        viewModel.switchDirection()
+    private func drawPins() {
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let coordinates = viewModel.coordinates
+        for (index, coordinate) in coordinates.enumerated() {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(index + 1)"
+            mapView.addAnnotation(annotation)
+        }
+        
+    }
+    
+    private func showUserCurrentLocation() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
     }
     
     required init?(coder: NSCoder) {
@@ -130,7 +169,7 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
             await self.viewModel.saveBookmark(id: busStop.id, routeNo: busStop.routeNo, name: busStop.name, origin: origin, destination: destination)
         }
     }
-        
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         viewModel.busStops[row].isExpanded.toggle()
@@ -143,6 +182,22 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
+}
+
+
+// MARK: - MKMapViewDelegate
+extension BusStopsView: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+        if mode == .none {
+            mapView.setUserTrackingMode(.followWithHeading, animated: true)
+        }
+    }
+}
+
+
+// MARK: - CLLocationManagerDelegate
+extension BusStopsView: CLLocationManagerDelegate {
+
 }
 
 
