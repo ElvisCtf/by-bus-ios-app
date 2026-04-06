@@ -129,20 +129,13 @@ final class BusStopsView: UIView {
             mapView.addAnnotation(annotation)
         }
         
-        zoomToCoordinate(coordinate: coordinates.first, regionRadius: 1000)
-    }
-    
-    private func zoomToCoordinate(coordinate: CLLocationCoordinate2D?, regionRadius: CLLocationDistance) {
-        if let coordinate {
-            let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-            mapView.setRegion(coordinateRegion, animated: true)
-        }
     }
     
     private func showUserCurrentLocation() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
     }
     
     required init?(coder: NSCoder) {
@@ -188,15 +181,17 @@ extension BusStopsView: UITableViewDelegate, UITableViewDataSource {
         } else {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-        
-        zoomToCoordinate(coordinate: viewModel.busStops[row].coordinate, regionRadius: 1000)
     }
 }
 
 
 // MARK: - MKMapViewDelegate
 extension BusStopsView: MKMapViewDelegate {
-
+    func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+        if mode == .none {
+            mapView.setUserTrackingMode(.followWithHeading, animated: true)
+        }
+    }
 }
 
 
